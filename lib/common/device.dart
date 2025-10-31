@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -114,17 +113,5 @@ class Device {
     }
 
     return "Unknown";
-  }
-
-  static IconData getNetworkIcon(List<ConnectivityResult> status) {
-    if (status.contains(ConnectivityResult.wifi)) {
-      return LucideIcons.wifi;
-    } else if (status.contains(ConnectivityResult.ethernet)) {
-      return LucideIcons.ethernetPort300;
-    } else if (status.contains(ConnectivityResult.mobile)) {
-      return LucideIcons.signal300;
-    }
-
-    return LucideIcons.globe300;
   }
 }
