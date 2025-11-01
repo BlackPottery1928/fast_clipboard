@@ -26,7 +26,7 @@ class _TextItemState extends State<TextItem> {
                 height: 280,
                 width: 270,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(18),
                   border: Border.all(
                     color: widget.i % 3 == 0
                         ? Theme.of(context).primaryColor
@@ -37,7 +37,7 @@ class _TextItemState extends State<TextItem> {
               ),
             ),
             ClipRRect(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(18),
               child: Container(
                 height: 280,
                 width: 270,

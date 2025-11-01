@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:material_text_fields/utils/form_validation.dart';
 
 class Toolbar extends StatefulWidget {
   const Toolbar({super.key});
@@ -12,31 +11,39 @@ class _ToolbarState extends State<Toolbar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 320,
+      width: 340,
       margin: EdgeInsetsGeometry.only(top: 10, bottom: 6),
       child: TextFormField(
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.next,
-        validator: FormValidation.requiredTextField,
+        toolbarOptions: ToolbarOptions(selectAll: true, paste: true),
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.search),
+          prefixIcon: Icon(Icons.search, color: Colors.black26),
+          prefixIconConstraints: BoxConstraints(minWidth: 32),
           isDense: true,
           hintText: '搜索',
           fillColor: Colors.black12,
           filled: true,
           hintStyle: TextStyle(fontSize: 14),
           contentPadding: EdgeInsets.zero,
-          suffixIcon: IconButton(icon: Icon(Icons.close), onPressed: () {}),
+          suffixIcon: IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () {},
+            splashColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            color: Colors.black26,
+          ),
+          constraints: BoxConstraints(maxHeight: 32),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(18),
             borderSide: BorderSide(color: Colors.black12),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(18),
             borderSide: BorderSide(color: Theme.of(context).primaryColor),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(18),
             borderSide: BorderSide(color: Colors.transparent),
           ),
         ),
