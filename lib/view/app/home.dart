@@ -15,10 +15,11 @@ class FastSendDesktopHomePage extends StatefulWidget {
 }
 
 class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
-    with TickerProviderStateMixin, TrayListener {
+    with TickerProviderStateMixin, TrayListener, WindowListener {
   @override
   void initState() {
     trayManager.addListener(this);
+    windowManager.addListener(this);
 
     super.initState();
 
@@ -49,8 +50,18 @@ class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
   }
 
   @override
+  Future<void> onWindowBlur() async {
+    if (await windowManager.isVisible()) {
+      await windowManager.hide();
+    }
+
+    super.onWindowBlur();
+  }
+
+  @override
   void dispose() {
     trayManager.removeListener(this);
+    windowManager.removeListener(this);
     super.dispose();
   }
 
