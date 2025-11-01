@@ -48,7 +48,6 @@ dependencies:
   mime: ^2.0.0
   gap: ^3.0.1
   lucide_icons_flutter: ^3.1.5
-  flutter_displaymode: ^0.7.0
   clipboard: ^2.0.2
   pasteboard: ^0.4.0
   window_manager: ^0.5.1

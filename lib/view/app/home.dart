@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tray_manager/tray_manager.dart';
+import 'package:window_manager/window_manager.dart';
 
 class FastSendDesktopHomePage extends StatefulWidget {
   const FastSendDesktopHomePage({super.key});
@@ -27,6 +28,15 @@ class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
   @override
   void onTrayIconRightMouseDown() {
     trayManager.popUpContextMenu();
+  }
+
+  @override
+  Future<void> onTrayIconMouseDown() async {
+    if (await windowManager.isVisible()) {
+      await windowManager.hide();
+    } else {
+      await windowManager.show(inactive: true);
+    }
   }
 
   @override

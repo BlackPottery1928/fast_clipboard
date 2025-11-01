@@ -1,8 +1,8 @@
 import 'package:fast_clipboard/common/platform_detect.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
+import 'package:screen_retriever/screen_retriever.dart';
 import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -12,10 +12,12 @@ class DefaultAppService {
     await windowManager.ensureInitialized();
 
     WindowOptions windowOptions = WindowOptions(
-      size: Size(2562, 420),
+      size: Size(2560, 420),
+      minimumSize: Size(2560, 420),
       skipTaskbar: true,
       alwaysOnTop: true,
-      titleBarStyle: TitleBarStyle.normal,
+      titleBarStyle: TitleBarStyle.hidden,
+      windowButtonVisibility: false,
     );
 
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
@@ -76,6 +78,11 @@ class DefaultAppService {
           }
         },
       );
+    }
+
+    List<Display> _displayList = await screenRetriever.getAllDisplays();
+    for (var display in _displayList) {
+      print(display.toJson());
     }
   }
 }
