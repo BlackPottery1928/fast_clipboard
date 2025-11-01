@@ -1,5 +1,5 @@
 class SvgResource {
-  static String get loadRoundDropDown => 'assets/round-drop-down.svg';
+  static String get loadRoundDropDown => 'asserts/chrome-logo-m100.svg';
 
   static String get loadRoundDropUp => 'assets/round-drop-up.svg';
 

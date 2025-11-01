@@ -1,4 +1,6 @@
+import 'package:fast_clipboard/common/svg_resurce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:rich_text_view/rich_text_view.dart';
 
@@ -78,22 +80,48 @@ class _TextItemState extends State<TextItem> {
                       child: Stack(
                         children: [
                           Align(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '文本',
-                                  style: TextStyle(color: Colors.black87),
-                                ),
-                                Text(
-                                  '123字符',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: EdgeInsetsGeometry.only(left: 12),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '文本',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    '123字符',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: EdgeInsetsGeometry.only(right: 12),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '三分钟前',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -113,35 +141,39 @@ class _TextItemState extends State<TextItem> {
             children: [
               Gap(6),
               SizedBox(
-                height: 14,
+                height: 34,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
                     _buildLine(),
                     Container(
                       decoration: BoxDecoration(
-                        color: widget.i % 3 == 0
-                            ? Theme.of(context).primaryColor
-                            : Colors.blueAccent,
-                        borderRadius: BorderRadius.circular(12),
+                        // color: widget.i % 3 == 0
+                        //     ? Theme.of(context).primaryColor
+                        //     : Colors.blueAccent,
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      width: 13,
-                      height: 13,
+                      width: 28,
+                      height: 28,
+                      child: SvgPicture.asset(SvgResource.loadRoundDropDown),
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: widget.i % 3 == 0
-                            ? Colors.transparent
-                            : Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      width: 10,
-                      height: 10,
-                    ),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //     color: widget.i % 3 == 0
+                    //         ? Colors.transparent
+                    //         : Colors.white,
+                    //     borderRadius: BorderRadius.circular(12),
+                    //   ),
+                    //   width: 9,
+                    //   height: 9,
+                    // ),
                   ],
                 ),
               ),
-              Text('三分钟前', style: TextStyle(fontSize: 10, color: Colors.black87)),
+              // Text(
+              //   '三分钟前',
+              //   style: TextStyle(fontSize: 10, color: Colors.black87),
+              // ),
             ],
           ),
         ),
