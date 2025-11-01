@@ -26,7 +26,13 @@ class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: HexColor('#edf0f2'),
-      body: SafeArea(child: Column(children: [Toolbar(), InfiniteListView()])),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [Toolbar(), InfiniteListView()],
+        ),
+      ),
     );
   }
 }

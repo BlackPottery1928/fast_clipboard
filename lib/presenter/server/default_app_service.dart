@@ -7,7 +7,7 @@ class DefaultAppService {
     await windowManager.ensureInitialized();
 
     WindowOptions windowOptions = WindowOptions(
-      size: Size(2562, 426),
+      size: Size(2562, 420),
       center: false,
       backgroundColor: Colors.transparent,
       skipTaskbar: false,

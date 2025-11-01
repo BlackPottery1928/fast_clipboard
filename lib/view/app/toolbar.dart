@@ -12,7 +12,8 @@ class _ToolbarState extends State<Toolbar> {
   Widget build(BuildContext context) {
     return Container(
       width: 340,
-      margin: EdgeInsetsGeometry.only(top: 10, bottom: 6),
+      height: 52,
+      alignment: Alignment.center,
       child: TextFormField(
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.next,
