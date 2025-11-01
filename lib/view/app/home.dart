@@ -3,6 +3,7 @@ import 'package:fast_clipboard/view/app/toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tray_manager/tray_manager.dart';
 
 class FastSendDesktopHomePage extends StatefulWidget {
   const FastSendDesktopHomePage({super.key});
@@ -13,12 +14,34 @@ class FastSendDesktopHomePage extends StatefulWidget {
 }
 
 class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, TrayListener {
   @override
   void initState() {
+    trayManager.addListener(this);
+
     super.initState();
 
     ServicesBinding.instance.addPostFrameCallback((c) {});
+  }
+
+  @override
+  void onTrayIconRightMouseDown() {
+    trayManager.popUpContextMenu();
+  }
+
+  @override
+  void onTrayMenuItemClick(MenuItem menuItem) {
+    if (menuItem.key == 'show_window') {
+      // do something
+    } else if (menuItem.key == 'exit_app') {
+      // do something
+    }
+  }
+
+  @override
+  void dispose() {
+    trayManager.removeListener(this);
+    super.dispose();
   }
 
   @override
