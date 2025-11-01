@@ -12,26 +12,19 @@ class InfiniteListView extends StatefulWidget {
 class _InfiniteListViewState extends State<InfiniteListView> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      alignment: Alignment.centerLeft,
+    return SizedBox(
       height: 330,
+      width: MediaQuery.of(context).size.width,
       child: ListView.separated(
-        padding: EdgeInsetsGeometry.zero,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemBuilder: (c, i) {
-          return Row(
-            children: [
-              Gap(i <= 0 ? 12 : 0),
-              TextItem(i: i),
-            ],
-          );
+          return TextItem(i: i);
         },
-        separatorBuilder: (a, c) {
-          return Gap(12);
+        separatorBuilder: (context, index) {
+          return const Gap(12);
         },
-        itemCount: 20,
+        itemCount: 30,
       ),
     );
   }

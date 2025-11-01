@@ -1,9 +1,8 @@
+import 'package:fast_clipboard/view/app/infinite_list_view.dart';
 import 'package:fast_clipboard/view/app/toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
-
-import 'infinite_list_view.dart';
 
 class FastSendDesktopHomePage extends StatefulWidget {
   const FastSendDesktopHomePage({super.key});

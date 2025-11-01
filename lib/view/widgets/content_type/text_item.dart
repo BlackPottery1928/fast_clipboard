@@ -25,6 +25,21 @@ class _TextItemState extends State<TextItem> {
           child: Stack(
             children: [
               ClipRRect(
+                child: Container(
+                  height: 280,
+                  width: 270,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(
+                      color: widget.i % 3 == 0
+                          ? Theme.of(context).primaryColor
+                          : Colors.transparent,
+                      width: 2.4,
+                    ),
+                  ),
+                ),
+              ),
+              ClipRRect(
                 borderRadius: BorderRadius.circular(18),
                 child: Container(
                   height: 280,
@@ -73,18 +88,18 @@ class _TextItemState extends State<TextItem> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    SelectableText(
                                       '文本',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    Text(
+                                    SelectableText(
                                       '123字符',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 12,
+                                        fontSize: 10,
                                       ),
                                     ),
                                   ],
@@ -94,16 +109,17 @@ class _TextItemState extends State<TextItem> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: Padding(
-                                padding: EdgeInsetsGeometry.only(right: 12),
+                                padding: EdgeInsetsGeometry.zero,
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
-                                      '三分钟前',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(
+                                        Icons.delete_forever,
+                                        size: 18,
+                                        color: Colors.red.shade300,
                                       ),
                                     ),
                                   ],
@@ -117,42 +133,25 @@ class _TextItemState extends State<TextItem> {
                   ),
                 ),
               ),
-              ClipRRect(
-                child: Container(
-                  height: 280,
-                  width: 270,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(18),
-                    border: Border.all(
-                      color: widget.i % 3 == 0
-                          ? Theme.of(context).primaryColor
-                          : Colors.transparent,
-                      width: 2.4,
+              SizedBox(
+                height: 296,
+                width: 270,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      width: 32,
+                      height: 32,
+                      child: SvgPicture.asset(SvgResource.loadRoundDropDown),
                     ),
-                  ),
-                ),
-              ),
-              ClipRRect(
-                child: SizedBox(
-                  height: 296,
-                  width: 270,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        width: 32,
-                        height: 32,
-                        child: SvgPicture.asset(SvgResource.loadRoundDropDown),
-                      ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
             ],
           ),
         ),
         SizedBox(
-          height: 32,
+          height: 34,
           width: 200,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -186,8 +185,8 @@ class _TextItemState extends State<TextItem> {
                 ],
               ),
               SizedBox(
-                height: 16,
-                child: Text('今天内', style: TextStyle(fontSize: 12)),
+                height: 18,
+                child: SelectableText('今天内', style: TextStyle(fontSize: 12)),
               ),
             ],
           ),
