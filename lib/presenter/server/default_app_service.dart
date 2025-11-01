@@ -12,18 +12,20 @@ class DefaultAppService {
     await windowManager.ensureInitialized();
 
     WindowOptions windowOptions = WindowOptions(
-      size: Size(2560, 420),
-      minimumSize: Size(2560, 420),
+      size: Size(2560, 388),
       skipTaskbar: true,
       alwaysOnTop: true,
       titleBarStyle: TitleBarStyle.hidden,
-      windowButtonVisibility: false,
+      // windowButtonVisibility: false,
     );
 
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
-      await windowManager.show();
-      await windowManager.focus();
+      await windowManager.hide();
+      await windowManager.setPosition(Offset(0, 0));
     });
+
+    Size size = await windowManager.getSize();
+    print(await windowManager.getBounds());
 
     // 系统托盘
     if (PlatformDetect.isDesktop()) {
@@ -72,8 +74,10 @@ class DefaultAppService {
           // }
 
           if (await windowManager.isVisible()) {
+            await windowManager.blur();
             await windowManager.hide();
           } else {
+            await windowManager.setPosition(Offset(0, 1446 - size.height));
             await windowManager.show(inactive: true);
           }
         },
