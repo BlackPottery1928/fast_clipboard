@@ -1,5 +1,8 @@
 import 'package:fast_clipboard/common/platform_detect.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -44,11 +47,35 @@ class DefaultAppService {
             label: '退出',
             onClick: (menuItem) async {
               await windowManager.destroy();
+              await hotKeyManager.unregisterAll();
             },
           ),
         ],
       );
       await trayManager.setContextMenu(menu);
+
+      // 热键
+      HotKey hotKey = HotKey(
+        identifier: 'fast_clipboard_app_hotkey_show_and_hide',
+        key: PhysicalKeyboardKey.keyV,
+        modifiers: [HotKeyModifier.control, HotKeyModifier.alt],
+        scope: HotKeyScope.system,
+      );
+
+      await hotKeyManager.register(
+        hotKey,
+        keyDownHandler: (hotKey) async {
+          // if (kDebugMode) {
+          //   print('onKeyDown+${hotKey.toJson()}');
+          // }
+
+          if (await windowManager.isVisible()) {
+            await windowManager.hide();
+          } else {
+            await windowManager.show(inactive: true);
+          }
+        },
+      );
     }
   }
 }
