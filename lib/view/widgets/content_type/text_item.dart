@@ -23,10 +23,10 @@ class _TextItemState extends State<TextItem> {
           children: [
             ClipRRect(
               child: Container(
-                height: 288,
-                width: 280,
+                height: 280,
+                width: 270,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(14),
                   border: Border.all(
                     color: widget.i % 3 == 0
                         ? Theme.of(context).primaryColor
@@ -37,10 +37,10 @@ class _TextItemState extends State<TextItem> {
               ),
             ),
             ClipRRect(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(14),
               child: Container(
-                height: 288,
-                width: 280,
+                height: 280,
+                width: 270,
                 decoration: BoxDecoration(color: Colors.black12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +56,7 @@ class _TextItemState extends State<TextItem> {
                         ),
                         child: RichTextView(
                           text:
-                              '''当地时间10月30日上午国家主席习近平乘专机抵达韩国，应大韩民国总统李在明邀请，出席亚太经合组织第三十二次领导人非正式会议并对韩国进行国事访问。随后，习近平同美国总统特朗普举行会晤。在这场举世瞩目、长达约100分钟的中美元首会晤上，习近平主席的发言掷地有声：“两国做伙伴、做朋友，这是历史的启示，也是现实的需要”“中美两国完全可以相互成就、共同繁荣”“双方应该算大账”“让中美关系这艘大船平稳前行”，传递掌舵领航、稳控大局的责任与担当，字字千钧。在釜山，中美关系发展再次迎来重要时刻 www.janedoe.com''',
+                              '''当地时间10月30日上午国中美关系发展再次迎来重要时刻 www.janedoe.com''',
                           truncate: true,
                           viewLessText: '折叠',
                           viewMoreText: '展开',
@@ -106,7 +106,7 @@ class _TextItemState extends State<TextItem> {
           ],
         ),
         Container(
-          height: 42,
+          height: 48,
           color: Colors.transparent,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -162,8 +162,8 @@ class LineIndicatorPainter extends CustomPainter {
       ..strokeWidth = 2.4
       ..strokeCap = StrokeCap.square;
 
-    canvas.drawLine(Offset(0, 0), Offset(145, 0), paint);
-    canvas.drawLine(Offset(-145, 0), Offset(0, 0), paint);
+    canvas.drawLine(Offset(0, 0), Offset(140, 0), paint);
+    canvas.drawLine(Offset(-140, 0), Offset(0, 0), paint);
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:fast_clipboard/view/app/toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -25,7 +26,7 @@ class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: HexColor('#edf0f2'),
-      body: SafeArea(child: InfiniteListView()),
+      body: SafeArea(child: Column(children: [Toolbar(), InfiniteListView()])),
     );
   }
 }

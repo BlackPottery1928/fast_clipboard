@@ -15,6 +15,7 @@ class _InfiniteListViewState extends State<InfiniteListView> {
     return Container(
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.centerLeft,
+      height: 340,
       child: ListView.separated(
         padding: EdgeInsetsGeometry.zero,
         shrinkWrap: true,
@@ -30,7 +31,7 @@ class _InfiniteListViewState extends State<InfiniteListView> {
         separatorBuilder: (a, c) {
           return Gap(12);
         },
-        itemCount: 3,
+        itemCount: 20,
       ),
     );
   }
