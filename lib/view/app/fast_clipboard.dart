@@ -2,8 +2,8 @@ import 'package:fast_clipboard/presenter/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-class FastSendApp extends StatelessWidget {
-  const FastSendApp({super.key});
+class FastClipboardApp extends StatelessWidget {
+  const FastClipboardApp({super.key});
 
   @override
   Widget build(BuildContext context) {

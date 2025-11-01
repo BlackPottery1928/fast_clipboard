@@ -6,5 +6,5 @@ import 'package:flutter/material.dart';
 Future<void> main() async {
   await DefaultAppService.ensureInitialized();
 
-  runApp(StateManagement(child: FastSendApp()));
+  runApp(StateManagement(child: FastClipboardApp()));
 }

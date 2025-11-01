@@ -6,7 +6,6 @@
 
 #include "generated_plugin_registrant.h"
 
-#include <bonsoir_windows/bonsoir_windows_plugin_c_api.h>
 #include <flutter_localization/flutter_localization_plugin_c_api.h>
 #include <pasteboard/pasteboard_plugin.h>
 #include <screen_retriever_windows/screen_retriever_windows_plugin_c_api.h>
@@ -15,8 +14,6 @@
 #include <window_manager/window_manager_plugin.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
-  BonsoirWindowsPluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("BonsoirWindowsPluginCApi"));
   FlutterLocalizationPluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FlutterLocalizationPluginCApi"));
   PasteboardPluginRegisterWithRegistrar(
