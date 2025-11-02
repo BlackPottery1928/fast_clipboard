@@ -18,8 +18,8 @@ class _InfiniteListViewState extends State<InfiniteListView> {
       child: ListView.separated(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        itemBuilder: (c, i) {
-          return TextItem(i: i);
+        itemBuilder: (context, index) {
+          return TextItem(index: index);
         },
         separatorBuilder: (context, index) {
           return const Gap(12);

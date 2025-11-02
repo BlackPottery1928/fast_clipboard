@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   flutter_localization
   hotkey_manager_linux
+  objectbox_flutter_libs
   pasteboard
   screen_retriever_linux
   tray_manager

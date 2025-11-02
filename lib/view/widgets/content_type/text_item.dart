@@ -5,9 +5,9 @@ import 'package:gap/gap.dart';
 import 'package:rich_text_view/rich_text_view.dart';
 
 class TextItem extends StatefulWidget {
-  final int i;
+  final int index;
 
-  const TextItem({super.key, required this.i});
+  const TextItem({super.key, required this.index});
 
   @override
   State<StatefulWidget> createState() => _TextItemState();
@@ -31,7 +31,7 @@ class _TextItemState extends State<TextItem> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
                     border: Border.all(
-                      color: widget.i % 3 == 0
+                      color: widget.index % 3 == 0
                           ? Theme.of(context).primaryColor
                           : Colors.transparent,
                       width: 2.4,
@@ -164,7 +164,7 @@ class _TextItemState extends State<TextItem> {
                   _buildLine(),
                   Container(
                     decoration: BoxDecoration(
-                      color: widget.i % 3 == 0
+                      color: widget.index % 3 == 0
                           ? Theme.of(context).primaryColor
                           : Colors.blueAccent,
                       borderRadius: BorderRadius.circular(8),
@@ -174,7 +174,7 @@ class _TextItemState extends State<TextItem> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: widget.i % 3 == 0
+                      color: widget.index % 3 == 0
                           ? Colors.transparent
                           : Colors.white,
                       borderRadius: BorderRadius.circular(12),

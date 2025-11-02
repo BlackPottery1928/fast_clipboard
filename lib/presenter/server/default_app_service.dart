@@ -1,4 +1,5 @@
 import 'package:fast_clipboard/common/platform_detect.dart';
+import 'package:fast_clipboard/presenter/database/database_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
@@ -9,6 +10,9 @@ import 'package:window_manager/window_manager.dart';
 class DefaultAppService {
   static Future<void> ensureInitialized() async {
     WidgetsFlutterBinding.ensureInitialized();
+
+    await DatabaseHandler.instance.create();
+    DatabaseHandler.instance.insert();
 
     // 系统托盘
     if (PlatformDetect.isDesktop()) {
