@@ -169,6 +169,14 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "3.1.2"
+  desktop_lifecycle:
+    dependency: "direct main"
+    description:
+      name: desktop_lifecycle
+      sha256: "221c0d1fd6582bbc28bd03f186983682d998459f3e8efde0105324a8ab350040"
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "0.1.1"
   device_info_plus:
     dependency: "direct main"
     description:
@@ -541,14 +549,6 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "3.2.1"
-  pasteboard:
-    dependency: "direct main"
-    description:
-      name: pasteboard
-      sha256: "9ff73ada33f79a59ff91f6c01881fd4ed0a0031cfc4ae2d86c0384471525fca1"
-      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
-    source: hosted
-    version: "0.4.0"
   path:
     dependency: "direct main"
     description:

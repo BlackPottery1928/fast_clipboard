@@ -1,5 +1,6 @@
 import 'package:fast_clipboard/common/platform_detect.dart';
 import 'package:fast_clipboard/presenter/database/database_handler.dart';
+import 'package:fast_clipboard/presenter/handler/clipboard_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
@@ -13,6 +14,8 @@ class DefaultAppService {
 
     await DatabaseHandler.instance.create();
     DatabaseHandler.instance.insert();
+
+    ClipboardHandler.instance.startMonitoring();
 
     // 系统托盘
     if (PlatformDetect.isDesktop()) {

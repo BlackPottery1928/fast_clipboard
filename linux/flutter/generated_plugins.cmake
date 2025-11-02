@@ -3,10 +3,10 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  desktop_lifecycle
   flutter_localization
   hotkey_manager_linux
   objectbox_flutter_libs
-  pasteboard
   screen_retriever_linux
   tray_manager
   url_launcher_linux
