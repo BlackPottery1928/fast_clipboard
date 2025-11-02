@@ -1,4 +1,4 @@
-import 'package:fast_clipboard/presenter/provider/transfer_provider.dart';
+import 'package:fast_clipboard/presenter/provider/records_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +16,7 @@ class _StateManagementState extends State<StateManagement> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => TransferProvider()),
+        ChangeNotifierProvider(create: (_) => RecordsProvider()),
       ],
       child: widget.child,
     );

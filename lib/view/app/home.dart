@@ -1,8 +1,12 @@
+import 'package:fast_clipboard/presenter/event/bottom_sheet_show_event.dart';
+import 'package:fast_clipboard/presenter/handler/event_handler.dart';
+import 'package:fast_clipboard/presenter/provider/records_provider.dart';
 import 'package:fast_clipboard/view/app/infinite_list_view.dart';
 import 'package:fast_clipboard/view/app/toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
 import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -21,9 +25,15 @@ class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
     trayManager.addListener(this);
     windowManager.addListener(this);
 
-    super.initState();
+    ServicesBinding.instance.addPostFrameCallback((c) {
+      EventHandler.instance.eventBus.on<RecordEvent>().listen((event) {
+        if (mounted) {
+          Provider.of<RecordsProvider>(context, listen: false).addRecord(event);
+        }
+      });
+    });
 
-    ServicesBinding.instance.addPostFrameCallback((c) {});
+    super.initState();
   }
 
   @override

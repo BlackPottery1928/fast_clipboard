@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:clipboard/clipboard.dart';
+import 'package:fast_clipboard/presenter/event/bottom_sheet_show_event.dart';
+import 'package:fast_clipboard/presenter/handler/event_handler.dart';
 
 class ClipboardHandler {
   ClipboardHandler._();
@@ -24,7 +26,8 @@ class ClipboardHandler {
           final currentData = await FlutterClipboard.paste();
           if (_lastData != currentData) {
             _lastData = currentData;
-            print(_lastData);
+
+            EventHandler.instance.publish(RecordEvent(currentData));
           }
         }
       } catch (e) {}
