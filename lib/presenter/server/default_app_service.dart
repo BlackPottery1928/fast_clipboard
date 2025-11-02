@@ -9,26 +9,25 @@ import 'package:window_manager/window_manager.dart';
 class DefaultAppService {
   static Future<void> ensureInitialized() async {
     WidgetsFlutterBinding.ensureInitialized();
-    await windowManager.ensureInitialized();
-
-    WindowOptions windowOptions = WindowOptions(
-      size: Size(2560, 388),
-      skipTaskbar: true,
-      alwaysOnTop: true,
-      titleBarStyle: TitleBarStyle.hidden,
-      // windowButtonVisibility: false,
-    );
-
-    await windowManager.waitUntilReadyToShow(windowOptions, () async {
-      await windowManager.hide();
-      await windowManager.setPosition(Offset(0, 0));
-    });
-
-    Size size = await windowManager.getSize();
-    print(await windowManager.getBounds());
 
     // 系统托盘
     if (PlatformDetect.isDesktop()) {
+      await windowManager.ensureInitialized();
+
+      // 窗口设置
+      WindowOptions windowOptions = WindowOptions(
+        size: Size(2560, 388),
+        skipTaskbar: true,
+        alwaysOnTop: true,
+        center: false,
+        titleBarStyle: TitleBarStyle.hidden,
+        windowButtonVisibility: false,
+      );
+
+      await windowManager.waitUntilReadyToShow(windowOptions, () async {
+        await windowManager.hide();
+      });
+
       await trayManager.setIcon('asserts/hamof-6sdre-001.ico');
       Menu menu = Menu(
         items: [
@@ -77,8 +76,8 @@ class DefaultAppService {
             await windowManager.blur();
             await windowManager.hide();
           } else {
-            await windowManager.setPosition(Offset(0, 1446 - size.height));
-            await windowManager.show(inactive: true);
+            // await windowManager.setPosition(Offset(0, 1446 - size.height));
+            await windowManager.show(inactive: false);
           }
         },
       );
