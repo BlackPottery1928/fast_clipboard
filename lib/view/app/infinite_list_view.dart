@@ -26,8 +26,9 @@ class _InfiniteListViewState extends State<InfiniteListView> {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return TextItem(
-              index: provider.linked[index].id,
+              index: provider.linked[index].idx,
               text: provider.linked[index].value,
+              length: provider.linked[index].length,
               isSelected: provider.linked[index].selected,
               onChanged: (String idx) {
                 Provider.of<RecordsProvider>(

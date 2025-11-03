@@ -7,6 +7,7 @@ import 'package:rich_text_view/rich_text_view.dart';
 class TextItem extends StatefulWidget {
   final String index;
   final String text;
+  final int length;
   final bool isSelected;
   final Function(String) onChanged;
 
@@ -15,6 +16,7 @@ class TextItem extends StatefulWidget {
     required this.index,
     required this.text,
     required this.isSelected,
+    required this.length,
     required this.onChanged,
   });
 
@@ -109,7 +111,7 @@ class _TextItemState extends State<TextItem> {
                                         ),
                                       ),
                                       SelectableText(
-                                        '123字符',
+                                        '${widget.length} 字符',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 10,

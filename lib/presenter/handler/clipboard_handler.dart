@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:clipboard/clipboard.dart';
 import 'package:fast_clipboard/presenter/event/bottom_sheet_show_event.dart';
 import 'package:fast_clipboard/presenter/handler/event_handler.dart';
+import 'package:fast_clipboard/presenter/handler/id_handler.dart';
 
 class ClipboardHandler {
   ClipboardHandler._();
@@ -27,7 +28,9 @@ class ClipboardHandler {
           if (_lastData != currentData) {
             _lastData = currentData;
 
-            EventHandler.instance.publish(RecordEvent(currentData));
+            EventHandler.instance.publish(
+              RecordEvent(idx: IdHandler.instance.next(), text: currentData),
+            );
           }
         }
       } catch (e) {}

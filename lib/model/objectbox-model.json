@@ -34,7 +34,7 @@
     },
     {
       "id": "2:2813412396149084478",
-      "lastPropertyId": "5:1379390773973153927",
+      "lastPropertyId": "8:8495882089045527735",
       "name": "Clipboards",
       "properties": [
         {
@@ -51,57 +51,99 @@
         {
           "id": "3:7045164783029529542",
           "name": "createdAt",
-          "type": 9
+          "type": 12
         },
         {
           "id": "4:4365034224799355876",
           "name": "updatedAt",
-          "type": 9
+          "type": 12
         },
         {
           "id": "5:1379390773973153927",
           "name": "appsId",
           "indexId": "1:5417029971902208060",
-          "type": 6,
-          "flags": 8
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "Apps"
+        },
+        {
+          "id": "6:1089723352459954443",
+          "name": "idx",
+          "indexId": "3:7915215574012673153",
+          "type": 9,
+          "flags": 2080
+        },
+        {
+          "id": "7:3546598700747665471",
+          "name": "tag",
+          "indexId": "4:106569065744668616",
+          "type": 9,
+          "flags": 2048
+        },
+        {
+          "id": "8:8495882089045527735",
+          "name": "recordContentId",
+          "indexId": "5:1702022961805575518",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "RecordContent"
         }
       ],
       "relations": []
     },
     {
-      "id": "3:8853705555893745235",
-      "lastPropertyId": "3:1413168206057090159",
-      "name": "Record",
+      "id": "4:8429156918514459688",
+      "lastPropertyId": "5:4354847269640612564",
+      "name": "RecordContent",
       "properties": [
         {
-          "id": "1:1071601446320569851",
+          "id": "1:2422208534410267481",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:1985560521931788342",
-          "name": "clipboardsId",
-          "type": 6
-        },
-        {
-          "id": "3:1413168206057090159",
+          "id": "2:4707409794687408145",
           "name": "content",
           "type": 9
+        },
+        {
+          "id": "3:8009509438762341570",
+          "name": "clipboardsId",
+          "indexId": "2:218283363638483268",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "Clipboards"
+        },
+        {
+          "id": "4:5819721364501258297",
+          "name": "hash",
+          "type": 9
+        },
+        {
+          "id": "5:4354847269640612564",
+          "name": "length",
+          "type": 6
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "3:8853705555893745235",
-  "lastIndexId": "1:5417029971902208060",
+  "lastEntityId": "4:8429156918514459688",
+  "lastIndexId": "5:1702022961805575518",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    8853705555893745235
+  ],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    1071601446320569851,
+    1985560521931788342,
+    1413168206057090159
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

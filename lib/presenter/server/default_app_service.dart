@@ -13,7 +13,6 @@ class DefaultAppService {
     WidgetsFlutterBinding.ensureInitialized();
 
     await DatabaseHandler.instance.create();
-    DatabaseHandler.instance.insert();
 
     ClipboardHandler.instance.startMonitoring();
 
@@ -42,7 +41,9 @@ class DefaultAppService {
             key: 'show_window',
             label: '显示主页面',
             onClick: (menuItem) async {
-              await windowManager.show(inactive: true);
+              if (!await windowManager.isVisible()) {
+                await windowManager.show(inactive: true);
+              }
             },
           ),
           MenuItem(

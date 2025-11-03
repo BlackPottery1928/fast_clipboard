@@ -16,7 +16,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import '../model/entry/apps.dart';
 import '../model/entry/clipboards.dart';
-import '../model/entry/record.dart';
+import '../model/entry/record_content.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -58,7 +58,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(2, 2813412396149084478),
     name: 'Clipboards',
-    lastPropertyId: const obx_int.IdUid(5, 1379390773973153927),
+    lastPropertyId: const obx_int.IdUid(8, 8495882089045527735),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -76,48 +76,88 @@ final _entities = <obx_int.ModelEntity>[
       obx_int.ModelProperty(
         id: const obx_int.IdUid(3, 7045164783029529542),
         name: 'createdAt',
-        type: 9,
+        type: 12,
         flags: 0,
       ),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(4, 4365034224799355876),
         name: 'updatedAt',
-        type: 9,
+        type: 12,
         flags: 0,
       ),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(5, 1379390773973153927),
         name: 'appsId',
-        type: 6,
-        flags: 8,
+        type: 11,
+        flags: 520,
         indexId: const obx_int.IdUid(1, 5417029971902208060),
+        relationField: 'apps',
+        relationTarget: 'Apps',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 1089723352459954443),
+        name: 'idx',
+        type: 9,
+        flags: 2080,
+        indexId: const obx_int.IdUid(3, 7915215574012673153),
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 3546598700747665471),
+        name: 'tag',
+        type: 9,
+        flags: 2048,
+        indexId: const obx_int.IdUid(4, 106569065744668616),
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 8495882089045527735),
+        name: 'recordContentId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(5, 1702022961805575518),
+        relationField: 'recordContent',
+        relationTarget: 'RecordContent',
       ),
     ],
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
   ),
   obx_int.ModelEntity(
-    id: const obx_int.IdUid(3, 8853705555893745235),
-    name: 'Record',
-    lastPropertyId: const obx_int.IdUid(3, 1413168206057090159),
+    id: const obx_int.IdUid(4, 8429156918514459688),
+    name: 'RecordContent',
+    lastPropertyId: const obx_int.IdUid(5, 4354847269640612564),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 1071601446320569851),
+        id: const obx_int.IdUid(1, 2422208534410267481),
         name: 'id',
         type: 6,
         flags: 1,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 1985560521931788342),
-        name: 'clipboardsId',
-        type: 6,
+        id: const obx_int.IdUid(2, 4707409794687408145),
+        name: 'content',
+        type: 9,
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 1413168206057090159),
-        name: 'content',
+        id: const obx_int.IdUid(3, 8009509438762341570),
+        name: 'clipboardsId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(2, 218283363638483268),
+        relationField: 'clipboards',
+        relationTarget: 'Clipboards',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 5819721364501258297),
+        name: 'hash',
         type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 4354847269640612564),
+        name: 'length',
+        type: 6,
         flags: 0,
       ),
     ],
@@ -164,13 +204,17 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(3, 8853705555893745235),
-    lastIndexId: const obx_int.IdUid(1, 5417029971902208060),
+    lastEntityId: const obx_int.IdUid(4, 8429156918514459688),
+    lastIndexId: const obx_int.IdUid(5, 1702022961805575518),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
-    retiredEntityUids: const [],
+    retiredEntityUids: const [8853705555893745235],
     retiredIndexUids: const [],
-    retiredPropertyUids: const [],
+    retiredPropertyUids: const [
+      1071601446320569851,
+      1985560521931788342,
+      1413168206057090159,
+    ],
     retiredRelationUids: const [],
     modelVersion: 5,
     modelVersionParserMinimum: 5,
@@ -228,7 +272,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
     ),
     Clipboards: obx_int.EntityDefinition<Clipboards>(
       model: _entities[1],
-      toOneRelations: (Clipboards object) => [],
+      toOneRelations: (Clipboards object) => [
+        object.apps,
+        object.recordContent,
+      ],
       toManyRelations: (Clipboards object) => {},
       getId: (Clipboards object) => object.id,
       setId: (Clipboards object, int id) {
@@ -236,82 +283,105 @@ obx_int.ModelDefinition getObjectBoxModel() {
       },
       objectToFB: (Clipboards object, fb.Builder fbb) {
         final typeOffset = fbb.writeString(object.type);
-        final createdAtOffset = fbb.writeString(object.createdAt);
-        final updatedAtOffset = fbb.writeString(object.updatedAt);
-        fbb.startTable(6);
+        final idxOffset = fbb.writeString(object.idx);
+        final tagOffset = fbb.writeString(object.tag);
+        fbb.startTable(9);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, typeOffset);
-        fbb.addOffset(2, createdAtOffset);
-        fbb.addOffset(3, updatedAtOffset);
-        fbb.addInt64(4, object.appsId);
+        fbb.addInt64(2, object.createdAt.microsecondsSinceEpoch * 1000);
+        fbb.addInt64(3, object.updatedAt.microsecondsSinceEpoch * 1000);
+        fbb.addInt64(4, object.apps.targetId);
+        fbb.addOffset(5, idxOffset);
+        fbb.addOffset(6, tagOffset);
+        fbb.addInt64(7, object.recordContent.targetId);
         fbb.finish(fbb.endTable());
         return object.id;
       },
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final typeParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 6, '');
-        final createdAtParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 8, '');
-        final updatedAtParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 10, '');
-        final appsIdParam = const fb.Int64Reader().vTableGet(
+
+        final object = Clipboards()
+          ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+          ..type = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 6, '')
+          ..createdAt = DateTime.fromMicrosecondsSinceEpoch(
+            (const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0) / 1000)
+                .round(),
+          )
+          ..updatedAt = DateTime.fromMicrosecondsSinceEpoch(
+            (const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0) / 1000)
+                .round(),
+          )
+          ..idx = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 14, '')
+          ..tag = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 16, '');
+        object.apps.targetId = const fb.Int64Reader().vTableGet(
           buffer,
           rootOffset,
           12,
           0,
         );
-        final object = Clipboards(
-          typeParam,
-          createdAtParam,
-          updatedAtParam,
-          appsIdParam,
-        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-
+        object.apps.attach(store);
+        object.recordContent.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          18,
+          0,
+        );
+        object.recordContent.attach(store);
         return object;
       },
     ),
-    Record: obx_int.EntityDefinition<Record>(
+    RecordContent: obx_int.EntityDefinition<RecordContent>(
       model: _entities[2],
-      toOneRelations: (Record object) => [],
-      toManyRelations: (Record object) => {},
-      getId: (Record object) => object.id,
-      setId: (Record object, int id) {
+      toOneRelations: (RecordContent object) => [object.clipboards],
+      toManyRelations: (RecordContent object) => {},
+      getId: (RecordContent object) => object.id,
+      setId: (RecordContent object, int id) {
         object.id = id;
       },
-      objectToFB: (Record object, fb.Builder fbb) {
+      objectToFB: (RecordContent object, fb.Builder fbb) {
         final contentOffset = fbb.writeString(object.content);
-        fbb.startTable(4);
+        final hashOffset = fbb.writeString(object.hash);
+        fbb.startTable(6);
         fbb.addInt64(0, object.id);
-        fbb.addInt64(1, object.clipboardsId);
-        fbb.addOffset(2, contentOffset);
+        fbb.addOffset(1, contentOffset);
+        fbb.addInt64(2, object.clipboards.targetId);
+        fbb.addOffset(3, hashOffset);
+        fbb.addInt64(4, object.length);
         fbb.finish(fbb.endTable());
         return object.id;
       },
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
-        final clipboardsIdParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          6,
-          0,
-        );
-        final contentParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 8, '');
-        final object = Record(idParam, clipboardsIdParam, contentParam);
 
+        final object = RecordContent()
+          ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+          ..content = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 6, '')
+          ..hash = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGet(buffer, rootOffset, 10, '')
+          ..length = const fb.Int64Reader().vTableGet(
+            buffer,
+            rootOffset,
+            12,
+            0,
+          );
+        object.clipboards.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          8,
+          0,
+        );
+        object.clipboards.attach(store);
         return object;
       },
     ),
@@ -348,35 +418,61 @@ class Clipboards_ {
   );
 
   /// See [Clipboards.createdAt].
-  static final createdAt = obx.QueryStringProperty<Clipboards>(
+  static final createdAt = obx.QueryDateNanoProperty<Clipboards>(
     _entities[1].properties[2],
   );
 
   /// See [Clipboards.updatedAt].
-  static final updatedAt = obx.QueryStringProperty<Clipboards>(
+  static final updatedAt = obx.QueryDateNanoProperty<Clipboards>(
     _entities[1].properties[3],
   );
 
-  /// See [Clipboards.appsId].
-  static final appsId = obx.QueryIntegerProperty<Clipboards>(
+  /// See [Clipboards.apps].
+  static final apps = obx.QueryRelationToOne<Clipboards, Apps>(
     _entities[1].properties[4],
   );
+
+  /// See [Clipboards.idx].
+  static final idx = obx.QueryStringProperty<Clipboards>(
+    _entities[1].properties[5],
+  );
+
+  /// See [Clipboards.tag].
+  static final tag = obx.QueryStringProperty<Clipboards>(
+    _entities[1].properties[6],
+  );
+
+  /// See [Clipboards.recordContent].
+  static final recordContent =
+      obx.QueryRelationToOne<Clipboards, RecordContent>(
+        _entities[1].properties[7],
+      );
 }
 
-/// [Record] entity fields to define ObjectBox queries.
-class Record_ {
-  /// See [Record.id].
-  static final id = obx.QueryIntegerProperty<Record>(
+/// [RecordContent] entity fields to define ObjectBox queries.
+class RecordContent_ {
+  /// See [RecordContent.id].
+  static final id = obx.QueryIntegerProperty<RecordContent>(
     _entities[2].properties[0],
   );
 
-  /// See [Record.clipboardsId].
-  static final clipboardsId = obx.QueryIntegerProperty<Record>(
+  /// See [RecordContent.content].
+  static final content = obx.QueryStringProperty<RecordContent>(
     _entities[2].properties[1],
   );
 
-  /// See [Record.content].
-  static final content = obx.QueryStringProperty<Record>(
+  /// See [RecordContent.clipboards].
+  static final clipboards = obx.QueryRelationToOne<RecordContent, Clipboards>(
     _entities[2].properties[2],
+  );
+
+  /// See [RecordContent.hash].
+  static final hash = obx.QueryStringProperty<RecordContent>(
+    _entities[2].properties[3],
+  );
+
+  /// See [RecordContent.length].
+  static final length = obx.QueryIntegerProperty<RecordContent>(
+    _entities[2].properties[4],
   );
 }

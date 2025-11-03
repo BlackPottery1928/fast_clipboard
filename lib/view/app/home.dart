@@ -1,3 +1,4 @@
+import 'package:fast_clipboard/presenter/database/database_handler.dart';
 import 'package:fast_clipboard/presenter/event/bottom_sheet_show_event.dart';
 import 'package:fast_clipboard/presenter/handler/event_handler.dart';
 import 'package:fast_clipboard/presenter/provider/records_provider.dart';
@@ -26,11 +27,15 @@ class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
     windowManager.addListener(this);
 
     ServicesBinding.instance.addPostFrameCallback((c) {
-      EventHandler.instance.eventBus.on<RecordEvent>().listen((event) {
+      EventHandler.instance.eventBus.on<RecordEvent>().listen((event) async {
         if (mounted) {
           Provider.of<RecordsProvider>(context, listen: false).addRecord(event);
+
+          await DatabaseHandler.instance.insert(event);
         }
       });
+
+      Provider.of<RecordsProvider>(context, listen: false).loadRecords();
     });
 
     super.initState();
@@ -43,9 +48,7 @@ class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
 
   @override
   Future<void> onTrayIconMouseDown() async {
-    if (await windowManager.isVisible()) {
-      await windowManager.hide();
-    } else {
+    if (!(await windowManager.isVisible())) {
       await windowManager.show(inactive: true);
     }
   }

@@ -1,7 +1,9 @@
 class RecordDefinition {
-  final String value;
-  final String id;
-  late bool selected;
+  late String idx;
+  late String value;
+  late int length = 0;
+  late bool selected = false;
+  late String hash = '';
 
-  RecordDefinition(this.id, this.value, {this.selected = false});
+  RecordDefinition();
 }
