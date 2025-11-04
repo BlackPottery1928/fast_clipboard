@@ -1,4 +1,4 @@
-import 'package:fast_clipboard/model/entry/clipboards.dart';
+import 'package:fast_clipboard/model/entry/clipboard_entry.dart';
 import 'package:fast_clipboard/model/record_definition.dart';
 import 'package:fast_clipboard/presenter/database/database_handler.dart';
 import 'package:fast_clipboard/presenter/event/bottom_sheet_show_event.dart';
@@ -56,11 +56,14 @@ class RecordsProvider with ChangeNotifier {
     linked.clear();
 
     DatabaseHandler.instance.getAll().then((value) {
-      for (Clipboards clipboards in value) {
+      for (ClipboardEntity clipboards in value) {
         RecordDefinition definition = RecordDefinition();
         definition.idx = clipboards.idx;
-        definition.value = clipboards.recordContent.target!.content;
-        definition.length = clipboards.recordContent.target!.length;
+        definition.value = DatabaseHandler.utf8codec.decode(
+          clipboards.content,
+          allowMalformed: true,
+        );
+        definition.length = clipboards.size;
         definition.selected = false;
         linked.add(definition);
       }

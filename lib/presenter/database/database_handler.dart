@@ -1,7 +1,9 @@
-import 'package:fast_clipboard/model/entry/clipboards.dart';
-import 'package:fast_clipboard/model/entry/record_content.dart';
+import 'dart:convert';
+
+import 'package:fast_clipboard/model/entry/clipboard_entry.dart';
 import 'package:fast_clipboard/model/objectbox.g.dart';
 import 'package:fast_clipboard/presenter/event/bottom_sheet_show_event.dart';
+import 'package:fast_clipboard/presenter/handler/id_handler.dart';
 import 'package:hashlib/hashlib.dart' as hashlib;
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -15,8 +17,9 @@ class DatabaseHandler {
 
   /// The Store of this app.
   late final Store store;
-  late final Box<Clipboards> clipboardBox;
-  late final Box<RecordContent> recordBox;
+  late final Box<ClipboardEntity> clipboardEntityBox;
+
+  static final Utf8Codec utf8codec = Utf8Codec(allowMalformed: true);
 
   Future<void> create() async {
     final docsDir = await getApplicationCacheDirectory();
@@ -25,57 +28,39 @@ class DatabaseHandler {
     );
 
     this.store = store;
-    clipboardBox = store.box<Clipboards>();
-    recordBox = store.box<RecordContent>();
+    clipboardEntityBox = store.box<ClipboardEntity>();
   }
 
   Future<void> insert(RecordEvent event) async {
     String textHashValue = hashlib.md5.convert(event.text.codeUnits).toString();
-    RecordContent? tmp = recordBox
-        .query(RecordContent_.hash.equals(textHashValue))
+
+    ClipboardEntity? entity = clipboardEntityBox
+        .query(ClipboardEntity_.hash.equals(textHashValue))
         .build()
         .findFirst();
-    if (tmp != null &&
-        event.text.length == tmp.length &&
-        event.text == tmp.content) {
-      if (tmp.clipboards.hasValue) {
-        // tmp.clipboards.target?.updatedAt = DateTime.now();
-        // clipboardBox.put(tmp.clipboards.target, mode: PutMode.update);
-        print(tmp.clipboards.targetId);
-        return;
-      }
-      return;
+    if (entity == null) {
+      ClipboardEntity clipboardEntity = ClipboardEntity();
+      clipboardEntity.hash = textHashValue;
+      clipboardEntity.idx = IdHandler.instance.next();
+      clipboardEntity.updatedAt = DateTime.now();
+      clipboardEntity.content = utf8codec.encode(event.text);
+      clipboardEntity.size = event.text.length;
+      clipboardEntity.type = 'text';
+      clipboardEntityBox.put(clipboardEntity);
+    } else {
+      entity.updatedAt = DateTime.now();
+      clipboardEntityBox.put(entity);
     }
-
-    RecordContent record = RecordContent();
-    record.content = event.text;
-    record.length = event.text.length;
-    record.hash = textHashValue;
-    recordBox.put(record);
-
-    Clipboards clipboardItem = Clipboards();
-    clipboardItem.idx = event.idx;
-    clipboardItem.type = 'text';
-    clipboardItem.createdAt = DateTime.now();
-    clipboardItem.updatedAt = DateTime.now();
-    clipboardItem.recordContent.target = record;
-
-    store.box<Clipboards>().put(clipboardItem);
   }
 
   Future<void> clear() async {
-    clipboardBox.removeAll();
+    clipboardEntityBox.removeAll();
   }
 
-  Future<void> update() async {
-    Clipboards clipboardItem = Clipboards();
-    store.box<Clipboards>().put(clipboardItem);
-  }
-
-  Future<List<Clipboards>> getAll() async {
-    Query<Clipboards> query = clipboardBox
+  Future<List<ClipboardEntity>> getAll() async {
+    Query<ClipboardEntity> query = clipboardEntityBox
         .query()
-        .order(Clipboards_.updatedAt)
+        .order(ClipboardEntity_.updatedAt)
         .build();
 
     return query.find();
