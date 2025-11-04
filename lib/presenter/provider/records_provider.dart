@@ -12,8 +12,7 @@ class RecordsProvider with ChangeNotifier {
 
   void addRecord(RecordEvent event) {
     String textHashValue = hashlib.md5.convert(event.text.codeUnits).toString();
-    RecordDefinition? tmp;
-    tmp = linked.firstWhere(
+    RecordDefinition? exist = linked.firstWhere(
       (element) =>
           element.hash == textHashValue &&
           element.length == event.text.length &&
@@ -21,12 +20,9 @@ class RecordsProvider with ChangeNotifier {
       orElse: () => NotDefinition(),
     );
 
-    if (tmp.runtimeType != NotDefinition) {
-      final index = linked.indexOf(tmp);
-      if (index != -1 && index != 0) {
-        linked.removeAt(index);
-        linked.insert(0, tmp);
-      }
+    if (exist.runtimeType == RecordDefinition) {
+      linked.remove(exist);
+      linked.insert(0, exist);
     } else {
       RecordDefinition definition = RecordDefinition();
       definition.idx = event.idx;

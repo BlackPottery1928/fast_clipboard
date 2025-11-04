@@ -4,6 +4,7 @@ import 'package:clipboard/clipboard.dart';
 import 'package:fast_clipboard/presenter/event/bottom_sheet_show_event.dart';
 import 'package:fast_clipboard/presenter/handler/event_handler.dart';
 import 'package:fast_clipboard/presenter/handler/id_handler.dart';
+import 'package:fast_clipboard/presenter/handler/logger_handler.dart';
 
 class ClipboardHandler {
   ClipboardHandler._();
@@ -14,14 +15,8 @@ class ClipboardHandler {
 
   String? _lastData;
 
-  Timer? _monitoringTimer;
-
-  void onClipboardChanged(EnhancedClipboardData data) {
-    print('Clipboard changed: ${data.text}');
-  }
-
   Future<void> startMonitoring() async {
-    Timer.periodic(Duration(milliseconds: 100), (timer) async {
+    Timer.periodic(Duration(milliseconds: 10), (timer) async {
       try {
         if (await FlutterClipboard.hasData()) {
           final currentData = await FlutterClipboard.paste();
@@ -33,7 +28,9 @@ class ClipboardHandler {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        LoggerHandler.instance.info(e.toString());
+      }
     });
   }
 }
