@@ -12,18 +12,16 @@ class RecordsProvider with ChangeNotifier {
 
   void addRecord(RecordEvent event) {
     String textHashValue = hashlib.md5.convert(event.text.codeUnits).toString();
-
     RecordDefinition? tmp;
-    for (var element in linked) {
-      if (element.hash == textHashValue &&
+    tmp = linked.firstWhere(
+      (element) =>
+          element.hash == textHashValue &&
           element.length == event.text.length &&
-          element.value == event.text) {
-        tmp = element;
-        break;
-      }
-    }
+          element.value == event.text,
+      orElse: () => NotDefinition(),
+    );
 
-    if (tmp != null) {
+    if (tmp.runtimeType != NotDefinition) {
       final index = linked.indexOf(tmp);
       if (index != -1 && index != 0) {
         linked.removeAt(index);
@@ -33,6 +31,9 @@ class RecordsProvider with ChangeNotifier {
       RecordDefinition definition = RecordDefinition();
       definition.idx = event.idx;
       definition.value = event.text;
+      definition.length = event.text.length;
+      definition.selected = false;
+      definition.hash = textHashValue;
       linked.insert(0, definition);
     }
 
@@ -66,5 +67,10 @@ class RecordsProvider with ChangeNotifier {
 
       notifyListeners();
     });
+  }
+
+  void clear() {
+    linked.clear();
+    notifyListeners();
   }
 }

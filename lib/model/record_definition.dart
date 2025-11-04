@@ -7,3 +7,7 @@ class RecordDefinition {
 
   RecordDefinition();
 }
+
+class NotDefinition extends RecordDefinition {
+  NotDefinition();
+}

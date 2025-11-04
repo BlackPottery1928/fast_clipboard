@@ -63,7 +63,7 @@ class DatabaseHandler {
     store.box<Clipboards>().put(clipboardItem);
   }
 
-  Future<void> delete() async {
+  Future<void> clear() async {
     clipboardBox.removeAll();
   }
 
