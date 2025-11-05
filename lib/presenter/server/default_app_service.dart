@@ -34,7 +34,8 @@ class DefaultAppService {
         await windowManager.hide();
       });
 
-      await trayManager.setIcon('asserts/hamof-6sdre-001.ico');
+      await trayManager.setIcon('asserts/tray-logo.ico');
+      await trayManager.setToolTip("FastClipboard");
       Menu menu = Menu(
         items: [
           MenuItem(
