@@ -30,6 +30,7 @@ class RecordsProvider with ChangeNotifier {
       definition.length = event.text.length;
       definition.selected = false;
       definition.hash = textHashValue;
+      definition.updated = DateTime.now();
       linked.insert(0, definition);
     }
 
@@ -61,6 +62,7 @@ class RecordsProvider with ChangeNotifier {
         );
         definition.length = clipboards.size;
         definition.selected = false;
+        definition.updated = clipboards.updatedAt;
         linked.add(definition);
       }
 

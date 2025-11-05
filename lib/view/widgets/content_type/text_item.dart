@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:rich_text_view/rich_text_view.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 
 class TextItem extends StatefulWidget {
   final String index;
   final String text;
   final int length;
   final bool isSelected;
+  final DateTime updated;
   final Function(String) onChanged;
 
   const TextItem({
@@ -17,6 +19,7 @@ class TextItem extends StatefulWidget {
     required this.text,
     required this.isSelected,
     required this.length,
+    required this.updated,
     required this.onChanged,
   });
 
@@ -202,7 +205,10 @@ class _TextItemState extends State<TextItem> {
               ),
               SizedBox(
                 height: 18,
-                child: SelectableText('今天内', style: TextStyle(fontSize: 12)),
+                child: SelectableText(
+                  GetTimeAgo.parse(widget.updated, locale: 'zh'),
+                  style: TextStyle(fontSize: 12),
+                ),
               ),
             ],
           ),

@@ -293,6 +293,14 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "3.0.1"
+  get_time_ago:
+    dependency: "direct main"
+    description:
+      name: get_time_ago
+      sha256: cd111914562ca2b938afbc73f715fab1f37795cc053924d08f6de59878781388
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "2.3.2"
   glob:
     dependency: transitive
     description:
@@ -421,14 +429,6 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "4.5.4"
-  image_hash:
-    dependency: "direct main"
-    description:
-      name: image_hash
-      sha256: "558eda20d86b8abbb77783a6ab58c71141a7d25aed5798c02f96707d585c50d8"
-      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
-    source: hosted
-    version: "1.0.9"
   intl:
     dependency: "direct main"
     description:

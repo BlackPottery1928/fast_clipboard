@@ -30,6 +30,7 @@ class _InfiniteListViewState extends State<InfiniteListView> {
               text: provider.linked[index].value,
               length: provider.linked[index].length,
               isSelected: provider.linked[index].selected,
+              updated: provider.linked[index].updated,
               onChanged: (String idx) {
                 Provider.of<RecordsProvider>(
                   context,

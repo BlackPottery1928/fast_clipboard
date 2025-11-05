@@ -60,7 +60,7 @@ class DatabaseHandler {
   Future<List<ClipboardEntity>> getAll() async {
     Query<ClipboardEntity> query = clipboardEntityBox
         .query()
-        .order(ClipboardEntity_.updatedAt)
+        .order(ClipboardEntity_.updatedAt, flags: Order.descending)
         .build();
 
     return query.find();
