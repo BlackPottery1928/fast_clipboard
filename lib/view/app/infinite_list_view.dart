@@ -3,6 +3,7 @@ import 'package:fast_clipboard/view/widgets/content_type/text_item.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 
 class InfiniteListView extends StatefulWidget {
   const InfiniteListView({super.key});
@@ -25,18 +26,53 @@ class _InfiniteListViewState extends State<InfiniteListView> {
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            return TextItem(
-              index: provider.linked[index].idx,
-              text: provider.linked[index].value,
-              length: provider.linked[index].length,
-              isSelected: provider.linked[index].selected,
-              updated: provider.linked[index].updated,
-              onChanged: (String idx) {
-                Provider.of<RecordsProvider>(
-                  context,
-                  listen: false,
-                ).toggleSelection(idx);
+            return DragItemWidget(
+              dragItemProvider: (DragItemRequest p) {},
+              allowedOperations: () => [
+                DropOperation.move,
+                DropOperation.copy,
+                DropOperation.userCancelled,
+              ],
+              canAddItemToExistingSession: true,
+              liftBuilder: (context, child) {
+                return Container(
+                  width: 100,
+                  height: 100,
+                  color: Colors.blue,
+                  child: child,
+                );
               },
+              dragBuilder: (BuildContext context, Widget child) {
+                return SnapshotSettings(
+                  translation: (rect, dragPosition) => const Offset(-2, -2),
+                  constraintsTransform: (constraints) =>
+                      constraints.deflate(const EdgeInsets.all(-2)),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(color: Colors.black, width: 1),
+                    ),
+                    padding: const EdgeInsets.all(1),
+                    child: child,
+                  ),
+                );
+              },
+              child: DraggableWidget(
+                child: TextItem(
+                  no: index,
+                  index: provider.linked[index].idx,
+                  text: provider.linked[index].value,
+                  length: provider.linked[index].length,
+                  isSelected: provider.linked[index].selected,
+                  updated: provider.linked[index].updated,
+                  onChanged: (String idx) {
+                    Provider.of<RecordsProvider>(
+                      context,
+                      listen: false,
+                    ).toggleSelection(idx);
+                  },
+                ),
+              ),
             );
           },
           separatorBuilder: (context, index) {
