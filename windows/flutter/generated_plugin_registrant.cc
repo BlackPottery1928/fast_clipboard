@@ -6,7 +6,6 @@
 
 #include "generated_plugin_registrant.h"
 
-#include <desktop_drop/desktop_drop_plugin.h>
 #include <desktop_lifecycle/desktop_lifecycle_plugin.h>
 #include <flutter_localization/flutter_localization_plugin_c_api.h>
 #include <hotkey_manager_windows/hotkey_manager_windows_plugin_c_api.h>
@@ -19,8 +18,6 @@
 #include <window_manager/window_manager_plugin.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
-  DesktopDropPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("DesktopDropPlugin"));
   DesktopLifecyclePluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("DesktopLifecyclePlugin"));
   FlutterLocalizationPluginCApiRegisterWithRegistrar(

@@ -27,36 +27,18 @@ class _InfiniteListViewState extends State<InfiniteListView> {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return DragItemWidget(
-              dragItemProvider: (DragItemRequest p) {},
+              dragItemProvider: (DragItemRequest p) {
+                var item = DragItem(localData: provider.linked[index].value);
+                item.add(Formats.plainText(provider.linked[index].value));
+                return item;
+              },
               allowedOperations: () => [
+                DropOperation.userCancelled,
                 DropOperation.move,
                 DropOperation.copy,
-                DropOperation.userCancelled,
+                DropOperation.link,
               ],
               canAddItemToExistingSession: true,
-              liftBuilder: (context, child) {
-                return Container(
-                  width: 100,
-                  height: 100,
-                  color: Colors.blue,
-                  child: child,
-                );
-              },
-              dragBuilder: (BuildContext context, Widget child) {
-                return SnapshotSettings(
-                  translation: (rect, dragPosition) => const Offset(-2, -2),
-                  constraintsTransform: (constraints) =>
-                      constraints.deflate(const EdgeInsets.all(-2)),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: Colors.black, width: 1),
-                    ),
-                    padding: const EdgeInsets.all(1),
-                    child: child,
-                  ),
-                );
-              },
               child: DraggableWidget(
                 child: TextItem(
                   no: index,

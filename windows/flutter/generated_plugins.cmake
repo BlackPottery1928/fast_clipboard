@@ -3,7 +3,6 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  desktop_drop
   desktop_lifecycle
   flutter_localization
   hotkey_manager_windows
