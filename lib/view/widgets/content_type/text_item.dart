@@ -10,12 +10,16 @@ class TextItem extends StatefulWidget {
   final String text;
   final int length;
   final bool isSelected;
+  final bool first;
+  final bool last;
   final DateTime updated;
   final Function(String) onChanged;
 
   const TextItem({
     super.key,
     required this.no,
+    this.first = false,
+    this.last = false,
     required this.index,
     required this.text,
     required this.isSelected,
@@ -32,7 +36,10 @@ class _TextItemState extends State<TextItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: widget.no == 0 ? 12 : 0),
+      padding: EdgeInsets.only(
+        left: widget.first ? 12 : 0,
+        right: widget.last ? 12 : 0,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,

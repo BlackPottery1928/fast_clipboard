@@ -43,6 +43,8 @@ class _InfiniteListViewState extends State<InfiniteListView> {
               child: DraggableWidget(
                 child: TextItem(
                   no: index,
+                  first: index == 0,
+                  last: index == provider.linked.length - 1,
                   index: provider.linked[index].idx,
                   text: provider.linked[index].value,
                   length: provider.linked[index].length,
