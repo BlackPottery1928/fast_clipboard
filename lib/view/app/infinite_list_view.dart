@@ -24,6 +24,7 @@ class _InfiniteListViewState extends State<InfiniteListView> {
         replacement: const Center(child: Text('复制的数据将显示在这里')),
         child: ListView.separated(
           shrinkWrap: true,
+          controller: ScrollController(),
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return DragItemWidget(

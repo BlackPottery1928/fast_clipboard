@@ -80,10 +80,13 @@ class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
     return Scaffold(
       backgroundColor: HexColor('#edf0f2'),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [Toolbar(), InfiniteListView()],
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [Toolbar(), InfiniteListView()],
+          ),
         ),
       ),
     );
