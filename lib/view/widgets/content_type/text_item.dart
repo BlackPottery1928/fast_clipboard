@@ -1,6 +1,4 @@
-import 'package:fast_clipboard/common/svg_resurce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get_time_ago/get_time_ago.dart';
 import 'package:rich_text_view/rich_text_view.dart';
@@ -139,16 +137,7 @@ class _TextItemState extends State<TextItem> {
                                           CrossAxisAlignment.end,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                            Icons.delete_forever,
-                                            size: 18,
-                                            color: Colors.red.shade300,
-                                          ),
-                                        ),
-                                      ],
+                                      children: [],
                                     ),
                                   ),
                                 ),
@@ -164,15 +153,7 @@ class _TextItemState extends State<TextItem> {
                     width: 270,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          width: 32,
-                          height: 32,
-                          child: SvgPicture.asset(
-                            SvgResource.loadRoundDropDown,
-                          ),
-                        ),
-                      ],
+                      children: [],
                     ),
                   ),
                 ],
