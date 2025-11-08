@@ -3,6 +3,7 @@ import 'package:fast_clipboard/presenter/handler/clipboard_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
+import 'package:screen_retriever/screen_retriever.dart';
 import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -18,16 +19,19 @@ class DefaultAppService {
     await windowManager.ensureInitialized();
 
     // 窗口设置
+    Display display = await screenRetriever.getPrimaryDisplay();
     WindowOptions windowOptions = WindowOptions(
-      size: Size(2560, 388),
+      size: Size(display.size.width, 390),
+      // minimumSize: Size(display.size.width, 390),
+      // maximumSize: Size(display.size.width, 390),
       skipTaskbar: true,
       alwaysOnTop: true,
-      center: false,
       titleBarStyle: TitleBarStyle.hidden,
       windowButtonVisibility: false,
     );
 
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.setPosition(Offset(0, display.size.height - 390));
       await windowManager.hide();
     });
 
@@ -74,18 +78,17 @@ class DefaultAppService {
     await hotKeyManager.register(
       hotKey,
       keyDownHandler: (hotKey) async {
-        // if (kDebugMode) {
-        //   print('onKeyDown+${hotKey.toJson()}');
-        // }
-
         if (await windowManager.isVisible()) {
-          await windowManager.blur();
           await windowManager.hide();
         } else {
-          // await windowManager.setPosition(Offset(0, 1446 - size.height));
-          await windowManager.show(inactive: false);
+          await windowManager.setPosition(Offset(0, display.size.height - 390));
+          await windowManager.show(inactive: true);
         }
       },
     );
+
+    screenRetriever.getAllDisplays().then((value) {
+      print(value.first.size);
+    });
   }
 }
