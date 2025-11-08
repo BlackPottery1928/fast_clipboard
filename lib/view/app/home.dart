@@ -77,6 +77,9 @@ class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.widthOf(context));
+    print(MediaQuery.heightOf(context));
+
     return Scaffold(
       backgroundColor: HexColor('#edf0f2'),
       body: SafeArea(

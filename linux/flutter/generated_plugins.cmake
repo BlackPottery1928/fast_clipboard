@@ -3,7 +3,6 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  desktop_lifecycle
   flutter_localization
   hotkey_manager_linux
   irondash_engine_context
@@ -11,7 +10,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   screen_retriever_linux
   super_native_extensions
   tray_manager
-  url_launcher_linux
   window_manager
 )
 

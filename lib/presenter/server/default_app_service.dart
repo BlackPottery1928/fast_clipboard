@@ -21,17 +21,13 @@ class DefaultAppService {
     // 窗口设置
     Display display = await screenRetriever.getPrimaryDisplay();
     WindowOptions windowOptions = WindowOptions(
-      size: Size(display.size.width, 390),
-      // minimumSize: Size(display.size.width, 390),
-      // maximumSize: Size(display.size.width, 390),
+      size: Size(display.size.width, 388),
       skipTaskbar: true,
       alwaysOnTop: true,
-      titleBarStyle: TitleBarStyle.hidden,
-      windowButtonVisibility: false,
     );
 
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
-      await windowManager.setPosition(Offset(0, display.size.height - 390));
+      await windowManager.setPosition(Offset(0, display.size.height - 388));
       await windowManager.hide();
     });
 
@@ -81,14 +77,14 @@ class DefaultAppService {
         if (await windowManager.isVisible()) {
           await windowManager.hide();
         } else {
-          await windowManager.setPosition(Offset(0, display.size.height - 390));
           await windowManager.show(inactive: true);
         }
       },
     );
 
-    screenRetriever.getAllDisplays().then((value) {
-      print(value.first.size);
-    });
+    List<Display> list = await screenRetriever.getAllDisplays();
+    for (var display in list) {
+      print(display.size);
+    }
   }
 }
