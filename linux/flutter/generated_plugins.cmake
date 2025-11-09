@@ -7,6 +7,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   hotkey_manager_linux
   irondash_engine_context
   objectbox_flutter_libs
+  pasteboard
   screen_retriever_linux
   super_native_extensions
   tray_manager

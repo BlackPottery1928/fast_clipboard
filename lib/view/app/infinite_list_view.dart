@@ -1,5 +1,8 @@
+import 'package:fast_clipboard/model/record_definition.dart';
+import 'package:fast_clipboard/presenter/database/database_handler.dart';
 import 'package:fast_clipboard/presenter/provider/records_provider.dart';
 import 'package:fast_clipboard/view/theme/view_region.dart';
+import 'package:fast_clipboard/view/widgets/content_type/image_item.dart';
 import 'package:fast_clipboard/view/widgets/content_type/text_item.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -31,7 +34,7 @@ class _InfiniteListViewState extends State<InfiniteListView> {
             return DragItemWidget(
               dragItemProvider: (DragItemRequest p) {
                 var item = DragItem(localData: provider.linked[index].value);
-                item.add(Formats.plainText(provider.linked[index].value));
+                item.add(Formats.plainText("provider.linked[index].value"));
                 return item;
               },
               allowedOperations: () => [
@@ -41,24 +44,7 @@ class _InfiniteListViewState extends State<InfiniteListView> {
                 DropOperation.link,
               ],
               canAddItemToExistingSession: true,
-              child: DraggableWidget(
-                child: TextItem(
-                  no: index,
-                  first: index == 0,
-                  last: index == provider.linked.length - 1,
-                  index: provider.linked[index].idx,
-                  text: provider.linked[index].value,
-                  length: provider.linked[index].length,
-                  isSelected: provider.linked[index].selected,
-                  updated: provider.linked[index].updated,
-                  onChanged: (String idx) {
-                    Provider.of<RecordsProvider>(
-                      context,
-                      listen: false,
-                    ).toggleSelection(idx);
-                  },
-                ),
-              ),
+              child: DraggableWidget(child: _buildItem(index, provider.linked)),
             );
           },
           separatorBuilder: (context, index) {
@@ -67,6 +53,47 @@ class _InfiniteListViewState extends State<InfiniteListView> {
           itemCount: provider.linked.length,
         ),
       ),
+    );
+  }
+
+  Widget _buildItem(int index, List<RecordDefinition> linked) {
+    if (linked[index].type == 'image') {
+      return ImageItem(
+        no: index,
+        first: index == 0,
+        last: index == linked.length - 1,
+        index: linked[index].idx,
+        text: linked[index].value,
+        length: linked[index].length,
+        isSelected: linked[index].selected,
+        updated: linked[index].updated,
+        onChanged: (String idx) {
+          Provider.of<RecordsProvider>(
+            context,
+            listen: false,
+          ).toggleSelection(idx);
+        },
+      );
+    }
+
+    return TextItem(
+      no: index,
+      first: index == 0,
+      last: index == linked.length - 1,
+      index: linked[index].idx,
+      text: DatabaseHandler.utf8codec.decode(
+        linked[index].value,
+        allowMalformed: true,
+      ),
+      length: linked[index].length,
+      isSelected: linked[index].selected,
+      updated: linked[index].updated,
+      onChanged: (String idx) {
+        Provider.of<RecordsProvider>(
+          context,
+          listen: false,
+        ).toggleSelection(idx);
+      },
     );
   }
 }

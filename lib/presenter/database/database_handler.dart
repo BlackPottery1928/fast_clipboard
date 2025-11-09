@@ -33,7 +33,7 @@ class DatabaseHandler {
   }
 
   Future<void> insert(RecordEvent event) async {
-    String textHashValue = hashlib.md5.convert(event.text.codeUnits).toString();
+    String textHashValue = hashlib.md5.convert(event.text).toString();
 
     ClipboardEntity? entity = clipboardEntityBox
         .query(ClipboardEntity_.hash.equals(textHashValue))
@@ -44,9 +44,9 @@ class DatabaseHandler {
       clipboardEntity.hash = textHashValue;
       clipboardEntity.idx = IdHandler.instance.next();
       clipboardEntity.updatedAt = DateTime.now();
-      clipboardEntity.content = utf8codec.encode(event.text);
+      clipboardEntity.content = event.text;
       clipboardEntity.size = event.text.length;
-      clipboardEntity.type = 'text';
+      clipboardEntity.type = event.type;
       _addRecord(clipboardEntity);
     } else {
       entity.updatedAt = DateTime.now();
