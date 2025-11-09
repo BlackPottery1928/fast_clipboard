@@ -21,13 +21,13 @@ class DefaultAppService {
     // 窗口设置
     Display display = await screenRetriever.getPrimaryDisplay();
     WindowOptions windowOptions = WindowOptions(
-      size: Size(display.size.width, 388),
+      size: Size(display.size.width, 390),
       skipTaskbar: true,
       alwaysOnTop: true,
     );
 
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
-      await windowManager.setPosition(Offset(0, display.size.height - 388));
+      await windowManager.setPosition(Offset(0, display.size.height - 390));
       await windowManager.hide();
     });
 

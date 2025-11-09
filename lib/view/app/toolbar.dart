@@ -26,7 +26,10 @@ class _ToolbarState extends State<Toolbar> {
               child: TextFormField(
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
-                toolbarOptions: ToolbarOptions(selectAll: true, paste: true),
+                toolbarOptions: ToolbarOptions(
+                  selectAll: true,
+                  paste: true,
+                ),
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.search, color: Colors.black26),
                   prefixIconConstraints: BoxConstraints(minWidth: 32),
@@ -67,7 +70,10 @@ class _ToolbarState extends State<Toolbar> {
             child: IconButton(
               icon: Icon(Icons.delete),
               onPressed: () {
-                Provider.of<RecordsProvider>(context, listen: false).clear();
+                Provider.of<RecordsProvider>(
+                  context,
+                  listen: false,
+                ).clear();
                 DatabaseHandler.instance.clear();
               },
             ),

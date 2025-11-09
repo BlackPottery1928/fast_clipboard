@@ -88,7 +88,7 @@ class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [Toolbar(), InfiniteListView()],
+            children: [Divider(height: 1), Toolbar(), InfiniteListView()],
           ),
         ),
       ),
