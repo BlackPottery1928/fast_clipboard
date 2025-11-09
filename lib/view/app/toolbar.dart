@@ -1,6 +1,8 @@
 import 'package:fast_clipboard/presenter/database/database_handler.dart';
 import 'package:fast_clipboard/presenter/provider/records_provider.dart';
+import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 
 class Toolbar extends StatefulWidget {
@@ -15,27 +17,27 @@ class _ToolbarState extends State<Toolbar> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.widthOf(context),
-      height: 52,
+      height: ViewRegion.scaffoldToolbarHeight,
       child: Stack(
         children: [
           Align(
+            alignment: Alignment.center,
             child: Container(
               width: 340,
-              height: 52,
+              height: ViewRegion.scaffoldToolbarHeight,
               alignment: Alignment.center,
               child: TextFormField(
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
-                toolbarOptions: ToolbarOptions(
-                  selectAll: true,
-                  paste: true,
-                ),
+                toolbarOptions: ToolbarOptions(selectAll: true, paste: true),
+                cursorHeight: 18,
+                onChanged: (value) {},
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.search, color: Colors.black26),
                   prefixIconConstraints: BoxConstraints(minWidth: 32),
                   isDense: true,
                   hintText: '搜索',
-                  fillColor: Colors.black12,
+                  fillColor: HexColor('#FAFAFC'),
                   filled: true,
                   hintStyle: TextStyle(fontSize: 14),
                   contentPadding: EdgeInsets.zero,
@@ -55,6 +57,7 @@ class _ToolbarState extends State<Toolbar> {
                     borderRadius: BorderRadius.circular(18),
                     borderSide: BorderSide(
                       color: Theme.of(context).primaryColor,
+                      width: 1.5,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
@@ -70,10 +73,7 @@ class _ToolbarState extends State<Toolbar> {
             child: IconButton(
               icon: Icon(Icons.delete),
               onPressed: () {
-                Provider.of<RecordsProvider>(
-                  context,
-                  listen: false,
-                ).clear();
+                Provider.of<RecordsProvider>(context, listen: false).clear();
                 DatabaseHandler.instance.clear();
               },
             ),

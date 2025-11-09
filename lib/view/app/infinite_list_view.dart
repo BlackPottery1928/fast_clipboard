@@ -1,4 +1,5 @@
 import 'package:fast_clipboard/presenter/provider/records_provider.dart';
+import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:fast_clipboard/view/widgets/content_type/text_item.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -17,8 +18,8 @@ class _InfiniteListViewState extends State<InfiniteListView> {
   Widget build(BuildContext context) {
     RecordsProvider provider = Provider.of<RecordsProvider>(context);
     return SizedBox(
-      height: 330,
-      width: MediaQuery.of(context).size.width,
+      height: ViewRegion.scaffoldBodyHeight,
+      width: MediaQuery.maybeWidthOf(context),
       child: Visibility(
         visible: provider.linked.isNotEmpty,
         replacement: const Center(child: Text('复制的数据将显示在这里')),
@@ -61,7 +62,7 @@ class _InfiniteListViewState extends State<InfiniteListView> {
             );
           },
           separatorBuilder: (context, index) {
-            return const Gap(12);
+            return Gap(ViewRegion.scaffoldBodyGap);
           },
           itemCount: provider.linked.length,
         ),

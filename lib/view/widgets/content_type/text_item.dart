@@ -1,6 +1,8 @@
+import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get_time_ago/get_time_ago.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:rich_text_view/rich_text_view.dart';
 
 class TextItem extends StatefulWidget {
@@ -37,24 +39,25 @@ class _TextItemState extends State<TextItem> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        left: widget.first ? 12 : 0,
-        right: widget.last ? 12 : 0,
+        left: widget.first ? ViewRegion.scaffoldBodyGap : 0,
+        right: widget.last ? ViewRegion.scaffoldBodyGap : 0,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          Gap(5),
           GestureDetector(
             onTap: () {
               widget.onChanged(widget.index.toString());
             },
             child: SizedBox(
-              height: 296,
+              height: 286,
               child: Stack(
                 children: [
                   ClipRRect(
                     child: Container(
-                      height: 280,
+                      height: 270,
                       width: 270,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(18),
@@ -62,7 +65,7 @@ class _TextItemState extends State<TextItem> {
                           color: widget.isSelected
                               ? Theme.of(context).primaryColor
                               : Colors.transparent,
-                          width: 2.4,
+                          width: 2.8,
                         ),
                       ),
                     ),
@@ -70,7 +73,7 @@ class _TextItemState extends State<TextItem> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(18),
                     child: Container(
-                      height: 280,
+                      height: 270,
                       width: 270,
                       decoration: BoxDecoration(color: Colors.black12),
                       child: Column(
@@ -183,21 +186,21 @@ class _TextItemState extends State<TextItem> {
                       decoration: BoxDecoration(
                         color: widget.isSelected
                             ? Theme.of(context).primaryColor
-                            : Colors.blueAccent,
-                        borderRadius: BorderRadius.circular(8),
+                            : Colors.black12,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      width: 8,
-                      height: 8,
+                      width: 10,
+                      height: 10,
                     ),
                     Container(
                       decoration: BoxDecoration(
                         color: widget.isSelected
                             ? Colors.transparent
                             : Colors.white,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      width: 5,
-                      height: 5,
+                      width: 7,
+                      height: 7,
                     ),
                   ],
                 ),
@@ -225,12 +228,12 @@ class LineIndicatorPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
-      ..color = Colors.black12
-      ..strokeWidth = 2.4
+      ..color = HexColor('#FAFAFC')
+      ..strokeWidth = 2.8
       ..strokeCap = StrokeCap.square;
 
-    canvas.drawLine(Offset(0, 0), Offset(140, 0), paint);
-    canvas.drawLine(Offset(-140, 0), Offset(0, 0), paint);
+    canvas.drawLine(Offset(0, 0), Offset(142, 0), paint);
+    canvas.drawLine(Offset(-142, 0), Offset(0, 0), paint);
   }
 
   @override

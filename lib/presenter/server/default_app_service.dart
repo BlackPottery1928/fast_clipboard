@@ -1,5 +1,6 @@
 import 'package:fast_clipboard/presenter/database/database_handler.dart';
 import 'package:fast_clipboard/presenter/handler/clipboard_handler.dart';
+import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
@@ -21,13 +22,15 @@ class DefaultAppService {
     // 窗口设置
     Display display = await screenRetriever.getPrimaryDisplay();
     WindowOptions windowOptions = WindowOptions(
-      size: Size(display.size.width, 390),
+      size: Size(display.size.width, ViewRegion.scaffoldHeight),
       skipTaskbar: true,
       alwaysOnTop: true,
     );
 
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
-      await windowManager.setPosition(Offset(0, display.size.height - 390));
+      await windowManager.setPosition(
+        Offset(0, display.size.height - ViewRegion.scaffoldHeight),
+      );
       await windowManager.hide();
     });
 
@@ -81,10 +84,5 @@ class DefaultAppService {
         }
       },
     );
-
-    List<Display> list = await screenRetriever.getAllDisplays();
-    for (var display in list) {
-      print(display.size);
-    }
   }
 }

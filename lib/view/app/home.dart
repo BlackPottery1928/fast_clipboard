@@ -4,9 +4,9 @@ import 'package:fast_clipboard/presenter/handler/event_handler.dart';
 import 'package:fast_clipboard/presenter/provider/records_provider.dart';
 import 'package:fast_clipboard/view/app/infinite_list_view.dart';
 import 'package:fast_clipboard/view/app/toolbar.dart';
+import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
@@ -77,18 +77,22 @@ class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.widthOf(context));
-    print(MediaQuery.heightOf(context));
-
     return Scaffold(
-      backgroundColor: HexColor('#edf0f2'),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SizedBox(
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [Divider(height: 1), Toolbar(), InfiniteListView()],
+            children: [
+              Divider(
+                height: ViewRegion.scaffoldWindowBorderHeight,
+                color: Colors.black26,
+              ),
+              Toolbar(),
+              InfiniteListView(),
+            ],
           ),
         ),
       ),
