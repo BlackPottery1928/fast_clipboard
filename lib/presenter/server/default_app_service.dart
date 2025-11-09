@@ -107,13 +107,15 @@ class DefaultAppService {
       identifier: 'fast_clipboard_app_hotkey_esc',
       key: PhysicalKeyboardKey.escape,
       modifiers: [],
-      scope: HotKeyScope.inapp,
+      scope: HotKeyScope.system,
     );
 
     await hotKeyManager.register(
       hotKeyEsc,
       keyDownHandler: (hotKey) async {
-        await windowManager.hide();
+        if (await windowManager.isVisible()) {
+          await windowManager.hide();
+        }
       },
     );
   }
