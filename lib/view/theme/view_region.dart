@@ -12,4 +12,5 @@ class ViewRegion {
   static double scaffoldToolbarHeight = 58;
   static double scaffoldBodyHeight = 330;
   static double scaffoldBodyGap = 14;
+  static double scaffoldBodyRadius = 18;
 }

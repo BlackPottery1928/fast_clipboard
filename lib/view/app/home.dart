@@ -7,6 +7,7 @@ import 'package:fast_clipboard/view/app/toolbar.dart';
 import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
@@ -78,7 +79,7 @@ class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: HexColor('#F5F5F7'),
       body: SafeArea(
         child: SizedBox(
           width: double.infinity,

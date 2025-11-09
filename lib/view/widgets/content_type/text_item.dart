@@ -55,106 +55,129 @@ class _TextItemState extends State<TextItem> {
               height: 286,
               child: Stack(
                 children: [
+                  Container(
+                    height: 270,
+                    width: 270,
+                    decoration: BoxDecoration(
+                      color: HexColor('#FEFEFE'),
+                      borderRadius: BorderRadius.circular(
+                        ViewRegion.scaffoldBodyRadius,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          offset: const Offset(2.0, 4.0),
+                          blurRadius: 12.0,
+                          color: Colors.black12,
+                          spreadRadius: 0.0,
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsetsGeometry.only(
+                              left: ViewRegion.scaffoldBodyGap,
+                              top: ViewRegion.scaffoldBodyGap,
+                              right: ViewRegion.scaffoldBodyGap,
+                              bottom: 6,
+                            ),
+                            child: RichTextView(
+                              text: widget.text,
+                              truncate: true,
+                              viewLessText: '折叠',
+                              viewMoreText: '展开',
+                              selectable: true,
+                              maxLines: 10,
+                              textWidthBasis: TextWidthBasis.longestLine,
+                              linkStyle: TextStyle(),
+                              style: TextStyle(fontSize: 14),
+                              supportedTypes: [
+                                UrlParser(onTap: (matched) async {}),
+                                EmailParser(onTap: (v) {}),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 48,
+                          decoration: BoxDecoration(
+                            color: Theme.of(
+                              context,
+                            ).primaryColor.withOpacity(.3),
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(
+                                ViewRegion.scaffoldBodyRadius,
+                              ),
+                              bottomRight: Radius.circular(
+                                ViewRegion.scaffoldBodyRadius,
+                              ),
+                            ),
+                          ),
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: EdgeInsetsGeometry.only(
+                                    left: ViewRegion.scaffoldBodyGap,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SelectableText(
+                                        '文本',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SelectableText(
+                                        '${widget.length} 字符',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Padding(
+                                  padding: EdgeInsetsGeometry.zero,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   ClipRRect(
                     child: Container(
                       height: 270,
                       width: 270,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(18),
+                        borderRadius: BorderRadius.circular(
+                          ViewRegion.scaffoldBodyRadius,
+                        ),
                         border: Border.all(
                           color: widget.isSelected
                               ? Theme.of(context).primaryColor
                               : Colors.transparent,
                           width: 2.8,
                         ),
-                      ),
-                    ),
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(18),
-                    child: Container(
-                      height: 270,
-                      width: 270,
-                      decoration: BoxDecoration(color: Colors.black12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsetsGeometry.only(
-                                left: 12,
-                                top: 12,
-                                right: 12,
-                                bottom: 6,
-                              ),
-                              child: RichTextView(
-                                text: widget.text,
-                                truncate: true,
-                                viewLessText: '折叠',
-                                viewMoreText: '展开',
-                                selectable: true,
-                                maxLines: 10,
-                                textWidthBasis: TextWidthBasis.longestLine,
-                                linkStyle: TextStyle(),
-                                style: TextStyle(fontSize: 14),
-                                supportedTypes: [
-                                  UrlParser(onTap: (matched) async {}),
-                                  EmailParser(onTap: (v) {}),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 48,
-                            color: Colors.black12,
-                            child: Stack(
-                              children: [
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Padding(
-                                    padding: EdgeInsetsGeometry.only(left: 12),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SelectableText(
-                                          '文本',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        SelectableText(
-                                          '${widget.length} 字符',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 10,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Padding(
-                                    padding: EdgeInsetsGeometry.zero,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                   ),
