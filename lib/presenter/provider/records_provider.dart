@@ -6,6 +6,7 @@ import 'package:fast_clipboard/presenter/event/record_event.dart';
 import 'package:fast_clipboard/presenter/handler/clipboard_handler.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hashlib/hashlib.dart' as hashlib;
+import 'package:window_manager/window_manager.dart';
 
 class RecordsProvider with ChangeNotifier {
   final List<RecordDefinition> linked = [];
@@ -24,7 +25,7 @@ class RecordsProvider with ChangeNotifier {
 
     if (exist.runtimeType == RecordDefinition) {
       linked.remove(exist);
-      linked.insert(0, exist);
+      _addRecord(exist);
     } else {
       RecordDefinition definition = RecordDefinition();
       definition.idx = event.idx;
@@ -33,10 +34,16 @@ class RecordsProvider with ChangeNotifier {
       definition.selected = false;
       definition.hash = textHashValue;
       definition.updated = DateTime.now();
-      linked.insert(0, definition);
+      _addRecord(definition);
     }
 
     notifyListeners();
+  }
+
+  Future<void> _addRecord(RecordDefinition definition) async {
+    if (!(await windowManager.isVisible())) {
+      linked.insert(0, definition);
+    }
   }
 
   void toggleSelection(String idx) {

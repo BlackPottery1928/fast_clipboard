@@ -7,6 +7,7 @@ import 'package:fast_clipboard/presenter/handler/id_handler.dart';
 import 'package:hashlib/hashlib.dart' as hashlib;
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'package:window_manager/window_manager.dart';
 
 class DatabaseHandler {
   DatabaseHandler._();
@@ -46,9 +47,15 @@ class DatabaseHandler {
       clipboardEntity.content = utf8codec.encode(event.text);
       clipboardEntity.size = event.text.length;
       clipboardEntity.type = 'text';
-      clipboardEntityBox.put(clipboardEntity);
+      _addRecord(clipboardEntity);
     } else {
       entity.updatedAt = DateTime.now();
+      _addRecord(entity);
+    }
+  }
+
+  Future<void> _addRecord(ClipboardEntity entity) async {
+    if (!(await windowManager.isVisible())) {
       clipboardEntityBox.put(entity);
     }
   }
