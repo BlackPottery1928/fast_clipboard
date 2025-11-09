@@ -1,5 +1,6 @@
 import 'package:fast_clipboard/presenter/database/database_handler.dart';
-import 'package:fast_clipboard/presenter/event/bottom_sheet_show_event.dart';
+import 'package:fast_clipboard/presenter/event/inapp_copy_event.dart';
+import 'package:fast_clipboard/presenter/event/record_event.dart';
 import 'package:fast_clipboard/presenter/handler/event_handler.dart';
 import 'package:fast_clipboard/presenter/provider/records_provider.dart';
 import 'package:fast_clipboard/view/app/infinite_list_view.dart';
@@ -31,6 +32,10 @@ class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
       EventHandler.instance.eventBus.on<RecordEvent>().listen((event) async {
         Provider.of<RecordsProvider>(context, listen: false).addRecord(event);
         await DatabaseHandler.instance.insert(event);
+      });
+
+      EventHandler.instance.eventBus.on<InAppCopyEvent>().listen((event) async {
+        Provider.of<RecordsProvider>(context, listen: false).copyRecord(event);
       });
 
       Provider.of<RecordsProvider>(context, listen: false).loadRecords();

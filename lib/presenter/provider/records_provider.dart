@@ -1,7 +1,9 @@
 import 'package:fast_clipboard/model/entry/clipboard_entry.dart';
 import 'package:fast_clipboard/model/record_definition.dart';
 import 'package:fast_clipboard/presenter/database/database_handler.dart';
-import 'package:fast_clipboard/presenter/event/bottom_sheet_show_event.dart';
+import 'package:fast_clipboard/presenter/event/inapp_copy_event.dart';
+import 'package:fast_clipboard/presenter/event/record_event.dart';
+import 'package:fast_clipboard/presenter/handler/clipboard_handler.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hashlib/hashlib.dart' as hashlib;
 
@@ -72,6 +74,16 @@ class RecordsProvider with ChangeNotifier {
 
   void clear() {
     linked.clear();
+    notifyListeners();
+  }
+
+  void copyRecord(InAppCopyEvent event) {
+    for (var record in linked) {
+      if (record.selected) {
+        ClipboardHandler.instance.copy(record.value, 'text/plain');
+      }
+    }
+
     notifyListeners();
   }
 }

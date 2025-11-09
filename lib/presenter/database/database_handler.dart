@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:fast_clipboard/model/entry/clipboard_entry.dart';
 import 'package:fast_clipboard/model/objectbox.g.dart';
-import 'package:fast_clipboard/presenter/event/bottom_sheet_show_event.dart';
+import 'package:fast_clipboard/presenter/event/record_event.dart';
 import 'package:fast_clipboard/presenter/handler/id_handler.dart';
 import 'package:hashlib/hashlib.dart' as hashlib;
 import 'package:path/path.dart' as p;

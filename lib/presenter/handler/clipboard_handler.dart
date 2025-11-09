@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:clipboard/clipboard.dart';
-import 'package:fast_clipboard/presenter/event/bottom_sheet_show_event.dart';
+import 'package:fast_clipboard/presenter/event/record_event.dart';
 import 'package:fast_clipboard/presenter/handler/event_handler.dart';
 import 'package:fast_clipboard/presenter/handler/id_handler.dart';
 import 'package:fast_clipboard/presenter/handler/logger_handler.dart';
@@ -32,5 +32,9 @@ class ClipboardHandler {
         LoggerHandler.instance.info(e.toString());
       }
     });
+  }
+
+  void copy(String value, type) {
+    FlutterClipboard.copy(value);
   }
 }

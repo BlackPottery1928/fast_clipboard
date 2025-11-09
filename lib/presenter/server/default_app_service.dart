@@ -1,5 +1,7 @@
 import 'package:fast_clipboard/presenter/database/database_handler.dart';
+import 'package:fast_clipboard/presenter/event/inapp_copy_event.dart';
 import 'package:fast_clipboard/presenter/handler/clipboard_handler.dart';
+import 'package:fast_clipboard/presenter/handler/event_handler.dart';
 import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -82,6 +84,21 @@ class DefaultAppService {
         } else {
           await windowManager.show(inactive: true);
         }
+      },
+    );
+
+    // 热键
+    HotKey hotKeyCopy = HotKey(
+      identifier: 'fast_clipboard_app_hotkey_copy',
+      key: PhysicalKeyboardKey.keyC,
+      modifiers: [HotKeyModifier.control],
+      scope: HotKeyScope.inapp,
+    );
+
+    await hotKeyManager.register(
+      hotKeyCopy,
+      keyDownHandler: (hotKey) async {
+        EventHandler.instance.publish(InAppCopyEvent());
       },
     );
   }
