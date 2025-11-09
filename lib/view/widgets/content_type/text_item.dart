@@ -65,8 +65,8 @@ class _TextItemState extends State<TextItem> {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          offset: const Offset(2.0, 4.0),
-                          blurRadius: 12.0,
+                          offset: const Offset(1.0, 2.0),
+                          blurRadius: 4.0,
                           color: Colors.black12,
                           spreadRadius: 0.0,
                         ),

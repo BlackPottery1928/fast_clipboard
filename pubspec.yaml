@@ -55,11 +55,11 @@ dependencies:
   hashlib: ^2.2.0
   get_time_ago: ^2.3.2
   super_drag_and_drop: ^0.9.1
+#  re_editor: ^0.8.0
 #  package_info_plus: ^9.0.0
 #  url_launcher: ^6.3.2
 #  desktop_lifecycle: ^0.1.1
 #  launch_at_startup: ^0.5.1
-#  msix: ^3.16.12
 #  app_links: ^6.4.1
 #  flutter_blurhash: ^0.9.1
 #  workmanager: ^0.9.0+3
@@ -83,6 +83,7 @@ dev_dependencies:
   objectbox_generator: ^5.0.1
   build_runner: ^2.10.1
   icons_launcher: ^3.0.3
+  msix: ^3.16.12
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -150,3 +151,9 @@ icons_launcher:
     linux:
       enable: false
       image_path: "asserts/logo.png"
+msix_config:
+  display_name: FastClipboard
+  publisher_display_name: FastClipboard
+  identity_name: com.blackpottery1928.fastclipboard
+  msix_version: 1.0.0.0
+  logo_path: asserts/logo.png

@@ -101,5 +101,20 @@ class DefaultAppService {
         EventHandler.instance.publish(InAppCopyEvent());
       },
     );
+
+    // 热键
+    HotKey hotKeyEsc = HotKey(
+      identifier: 'fast_clipboard_app_hotkey_esc',
+      key: PhysicalKeyboardKey.escape,
+      modifiers: [],
+      scope: HotKeyScope.inapp,
+    );
+
+    await hotKeyManager.register(
+      hotKeyEsc,
+      keyDownHandler: (hotKey) async {
+        await windowManager.hide();
+      },
+    );
   }
 }
