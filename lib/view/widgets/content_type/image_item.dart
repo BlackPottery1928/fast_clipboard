@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:fast_clipboard/view/theme/view_region.dart';
+import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get_time_ago/get_time_ago.dart';
@@ -11,7 +12,7 @@ class ImageItem extends StatefulWidget {
   final int no;
 
   final String index;
-  final Uint8List? text;
+  final Uint8List? image;
   final int length;
   final bool isSelected;
   final bool first;
@@ -25,7 +26,7 @@ class ImageItem extends StatefulWidget {
     this.first = false,
     this.last = false,
     required this.index,
-    required this.text,
+    required this.image,
     required this.isSelected,
     required this.length,
     required this.updated,
@@ -87,7 +88,10 @@ class _ImageItemState extends State<ImageItem> {
                               bottom: 6,
                             ),
                             child: PhotoView(
-                              imageProvider: MemoryImage(widget.text!, scale: 1.0),
+                              imageProvider: MemoryImage(
+                                widget.image!,
+                                scale: 1.0,
+                              ),
                             ),
                           ),
                         ),
@@ -127,7 +131,7 @@ class _ImageItemState extends State<ImageItem> {
                                         ),
                                       ),
                                       SelectableText(
-                                        '${widget.length} 字符',
+                                        filesize(widget.length),
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 10,

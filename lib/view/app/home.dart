@@ -31,7 +31,7 @@ class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
     ServicesBinding.instance.addPostFrameCallback((c) {
       EventHandler.instance.eventBus.on<RecordEvent>().listen((event) async {
         Provider.of<RecordsProvider>(context, listen: false).addRecord(event);
-        await DatabaseHandler.instance.insert(event);
+        await databaseHandler.insert(event);
       });
 
       EventHandler.instance.eventBus.on<InAppCopyEvent>().listen((event) async {

@@ -11,7 +11,9 @@ class EventHandler {
 
   final EventBus _eventBus = EventBus();
 
-  void publish(event) {
+  void publish(Object event) {
     _eventBus.fire(event);
   }
 }
+
+final EventHandler eventHandler = EventHandler.instance;

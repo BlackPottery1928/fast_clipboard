@@ -1,7 +1,7 @@
 import 'package:fast_clipboard/model/record_definition.dart';
-import 'package:fast_clipboard/presenter/database/database_handler.dart';
 import 'package:fast_clipboard/presenter/provider/records_provider.dart';
 import 'package:fast_clipboard/view/theme/view_region.dart';
+import 'package:fast_clipboard/view/widgets/content_type/file_item.dart';
 import 'package:fast_clipboard/view/widgets/content_type/image_item.dart';
 import 'package:fast_clipboard/view/widgets/content_type/text_item.dart';
 import 'package:flutter/material.dart';
@@ -33,11 +33,13 @@ class _InfiniteListViewState extends State<InfiniteListView> {
           itemBuilder: (context, index) {
             return DragItemWidget(
               dragItemProvider: (DragItemRequest p) {
-                var item = DragItem(localData: provider.linked[index].value);
+                // todo
+                var item = DragItem(localData: 'test');
                 item.add(Formats.plainText("provider.linked[index].value"));
                 return item;
               },
-              allowedOperations: () => [
+              allowedOperations: () =>
+              [
                 DropOperation.userCancelled,
                 DropOperation.move,
                 DropOperation.copy,
@@ -57,13 +59,31 @@ class _InfiniteListViewState extends State<InfiniteListView> {
   }
 
   Widget _buildItem(int index, List<RecordDefinition> linked) {
-    if (linked[index].type == 'image') {
+    if (linked[index].type == 'file') {
+      return FileItem(
+        no: index,
+        first: index == 0,
+        last: index == linked.length - 1,
+        index: linked[index].idx,
+        files: linked[index].files,
+        length: linked[index].length,
+        isSelected: linked[index].selected,
+        updated: linked[index].updated,
+        onChanged: (String idx) {
+          Provider.of<RecordsProvider>(
+            context,
+            listen: false,
+          ).toggleSelection(idx);
+        },
+      );
+    }
+    else if (linked[index].type == 'image') {
       return ImageItem(
         no: index,
         first: index == 0,
         last: index == linked.length - 1,
         index: linked[index].idx,
-        text: linked[index].value,
+        image: linked[index].image,
         length: linked[index].length,
         isSelected: linked[index].selected,
         updated: linked[index].updated,
@@ -81,10 +101,7 @@ class _InfiniteListViewState extends State<InfiniteListView> {
       first: index == 0,
       last: index == linked.length - 1,
       index: linked[index].idx,
-      text: DatabaseHandler.utf8codec.decode(
-        linked[index].value,
-        allowMalformed: true,
-      ),
+      text: linked[index].text,
       length: linked[index].length,
       isSelected: linked[index].selected,
       updated: linked[index].updated,

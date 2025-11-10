@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:fast_clipboard/model/entry/clipboard_entry.dart';
 import 'package:fast_clipboard/model/objectbox.g.dart';
 import 'package:fast_clipboard/presenter/event/record_event.dart';
 import 'package:fast_clipboard/presenter/handler/id_handler.dart';
-import 'package:hashlib/hashlib.dart' as hashlib;
+import 'package:fast_clipboard/presenter/provider/records_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:window_manager/window_manager.dart';
@@ -20,7 +21,7 @@ class DatabaseHandler {
   late final Store store;
   late final Box<ClipboardEntity> clipboardEntityBox;
 
-  static final Utf8Codec utf8codec = Utf8Codec(allowMalformed: true);
+  final Utf8Codec utf8codec = Utf8Codec(allowMalformed: true);
 
   Future<void> create() async {
     final docsDir = await getApplicationCacheDirectory();
@@ -33,7 +34,7 @@ class DatabaseHandler {
   }
 
   Future<void> insert(RecordEvent event) async {
-    String textHashValue = hashlib.md5.convert(event.text).toString();
+    String textHashValue = RecordsProvider.hashvalue(event);
 
     ClipboardEntity? entity = clipboardEntityBox
         .query(ClipboardEntity_.hash.equals(textHashValue))
@@ -44,9 +45,22 @@ class DatabaseHandler {
       clipboardEntity.hash = textHashValue;
       clipboardEntity.idx = IdHandler.instance.next();
       clipboardEntity.updatedAt = DateTime.now();
-      clipboardEntity.content = event.text;
-      clipboardEntity.size = event.text.length;
+
       clipboardEntity.type = event.type;
+
+      if (event.type == "text") {
+        clipboardEntity.content = utf8codec.encode(event.text);
+        clipboardEntity.size = event.text.length;
+      } else if (event.type == "image") {
+        clipboardEntity.content = event.image;
+        clipboardEntity.size = event.image.length;
+      } else if (event.type == "file") {
+        clipboardEntity.content = Uint8List.fromList(
+          utf8.encode(event.files.join(',')),
+        );
+        clipboardEntity.size = event.files.length;
+      }
+
       _addRecord(clipboardEntity);
     } else {
       entity.updatedAt = DateTime.now();
@@ -73,3 +87,5 @@ class DatabaseHandler {
     return query.find();
   }
 }
+
+final DatabaseHandler databaseHandler = DatabaseHandler.instance;

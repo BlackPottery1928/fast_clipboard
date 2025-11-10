@@ -35,3 +35,5 @@ class IdHandler {
     return nextNumId(8);
   }
 }
+
+final IdHandler idHandler = IdHandler.instance;

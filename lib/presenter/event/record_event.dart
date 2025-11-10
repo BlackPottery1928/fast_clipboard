@@ -1,9 +1,11 @@
 import 'dart:typed_data';
 
 class RecordEvent {
-  final String idx;
-  final String type;
-  final Uint8List text;
+  late String idx;
+  late String type;
+  late String text;
+  late Uint8List image;
+  late List<String> files;
 
-  RecordEvent({required this.idx, required this.type, required this.text});
+  RecordEvent();
 }

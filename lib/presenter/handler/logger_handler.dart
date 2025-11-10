@@ -19,3 +19,5 @@ class LoggerHandler {
     }
   }
 }
+
+final logger = LoggerHandler.instance;

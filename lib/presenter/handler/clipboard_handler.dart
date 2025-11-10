@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:typed_data';
 
-import 'package:clipboard/clipboard.dart';
-import 'package:fast_clipboard/presenter/database/database_handler.dart';
 import 'package:fast_clipboard/presenter/event/record_event.dart';
 import 'package:fast_clipboard/presenter/handler/event_handler.dart';
 import 'package:fast_clipboard/presenter/handler/id_handler.dart';
 import 'package:fast_clipboard/presenter/handler/logger_handler.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pasteboard/pasteboard.dart';
 
 class ClipboardHandler {
@@ -26,41 +24,51 @@ class ClipboardHandler {
         final currentData = await Pasteboard.text;
         final currentImage = await Pasteboard.image;
         final currentFiles = await Pasteboard.files();
+
         if (_lastData != currentData) {
           _lastData = currentData;
-          EventHandler.instance.publish(
-            RecordEvent(
-              idx: IdHandler.instance.next(),
-              type: 'text',
-              text: DatabaseHandler.utf8codec.encode(_lastData!),
-            ),
-          );
+
+          RecordEvent event = RecordEvent();
+          event.idx = idHandler.next();
+          event.type = 'text';
+          event.text = _lastData ?? '';
+          eventHandler.publish(event);
         } else if (_lastImage != currentImage) {
           _lastImage = currentImage;
-          EventHandler.instance.publish(
-            RecordEvent(
-              idx: IdHandler.instance.next(),
-              type: 'image',
-              text: _lastImage!,
-            ),
-          );
-        } else if (_lastFiles != currentFiles && currentFiles.isNotEmpty) {
-          _lastFiles = _lastFiles;
-          EventHandler.instance.publish(
-            RecordEvent(
-              idx: IdHandler.instance.next(),
-              type: 'file',
-              text: _lastImage!,
-            ),
-          );
+
+          RecordEvent event = RecordEvent();
+          event.idx = idHandler.next();
+          event.type = 'image';
+          event.image = currentImage!;
+
+          eventHandler.publish(event);
+        } else if (currentFiles.isNotEmpty) {
+          if (listEquals(_lastFiles, currentFiles)) {
+            return;
+          }
+
+          // print(currentFiles);
+          _lastFiles = currentFiles;
+
+          RecordEvent event = RecordEvent();
+          event.idx = idHandler.next();
+          event.type = 'file';
+          event.files = currentFiles;
+          eventHandler.publish(event);
         }
       } catch (e) {
-        LoggerHandler.instance.info(e.toString());
+        logger.info(e.toString());
       }
     });
   }
 
   Future<void> copy(String value, type) async {
-    await FlutterClipboard.copy(value);
+    Pasteboard.writeText(value);
+  }
+
+  Future<void> copyFiles(List<String> value) async {
+    Pasteboard.writeFiles(value);
   }
 }
+
+final ClipboardHandler clipboardHandler = ClipboardHandler.instance;

@@ -13,13 +13,28 @@ class RecordsProvider with ChangeNotifier {
 
   List<RecordDefinition> get records => linked;
 
+  static String hashvalue(RecordEvent event) {
+    if (event.type == 'text') {
+      return hashlib.md5.convert(event.text.codeUnits).toString();
+    } else if (event.type == 'image') {
+      return hashlib.md5.convert(event.image).toString();
+    } else if (event.type == 'file') {
+      return hashlib.md5
+          .convert(
+            Uint8List.fromList(
+              databaseHandler.utf8codec.encode(event.files.join(',')),
+            ),
+          )
+          .toString();
+    }
+
+    return '';
+  }
+
   void addRecord(RecordEvent event) {
-    String textHashValue = hashlib.md5.convert(event.text).toString();
+    String textHashValue = hashvalue(event);
     RecordDefinition? exist = linked.firstWhere(
-      (element) =>
-          element.hash == textHashValue &&
-          element.length == event.text.length &&
-          element.value == event.text,
+      (element) => element.hash == textHashValue,
       orElse: () => NotDefinition(),
     );
 
@@ -29,12 +44,22 @@ class RecordsProvider with ChangeNotifier {
     } else {
       RecordDefinition definition = RecordDefinition();
       definition.idx = event.idx;
-      definition.value = event.text;
-      definition.length = event.text.length;
       definition.selected = false;
       definition.hash = textHashValue;
       definition.updated = DateTime.now();
       definition.type = event.type;
+
+      if (event.type == "text") {
+        definition.text = event.text;
+        definition.length = event.text.length;
+      } else if (event.type == "image") {
+        definition.image = event.image;
+        definition.length = event.image.length;
+      } else if (event.type == "file") {
+        definition.files = event.files;
+        definition.length = event.files.length;
+      }
+
       _addRecord(definition);
     }
 
@@ -66,11 +91,22 @@ class RecordsProvider with ChangeNotifier {
       for (ClipboardEntity clipboards in value) {
         RecordDefinition definition = RecordDefinition();
         definition.idx = clipboards.idx;
-        definition.value = clipboards.content;
         definition.length = clipboards.size;
         definition.selected = false;
         definition.updated = clipboards.updatedAt;
         definition.type = clipboards.type;
+        // 处理格式数据
+        if (clipboards.type == 'text') {
+          definition.text = databaseHandler.utf8codec.decode(
+            clipboards.content,
+            allowMalformed: true,
+          );
+        } else if (clipboards.type == 'image') {
+          definition.image = clipboards.content;
+        } else if (clipboards.type == 'file') {
+          definition.files = uint8ListToStringList(clipboards.content);
+        }
+
         linked.add(definition);
       }
 
@@ -86,13 +122,32 @@ class RecordsProvider with ChangeNotifier {
   void copyRecord(InAppCopyEvent event) {
     for (var record in linked) {
       if (record.selected) {
-        ClipboardHandler.instance.copy(
-          DatabaseHandler.utf8codec.decode(record.value, allowMalformed: true),
-          'text/plain',
-        );
+        if (record.type == 'text') {
+          clipboardHandler.copy(record.text, 'text/plain');
+        } else if (record.type == 'image') {
+        } else if (record.type == 'file') {
+          clipboardHandler.copyFiles(record.files);
+        }
       }
     }
 
     notifyListeners();
+  }
+
+  List<String> uint8ListToStringList(Uint8List uint8List) {
+    // 1. 处理空字节（返回空列表）
+    if (uint8List.isEmpty) return [];
+
+    try {
+      // 2. UTF-8 解码为完整字符串
+      final combinedStr = databaseHandler.utf8codec.decode(uint8List);
+
+      // 3. 按 \x00 分隔符拆分，还原 List<String>
+      return combinedStr.split(',');
+    } catch (e) {
+      // 处理解码失败（如字节数据不合法）
+      print('解码失败：$e');
+      return []; // 或返回默认值、抛出异常
+    }
   }
 }

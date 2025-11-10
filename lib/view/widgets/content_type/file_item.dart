@@ -1,15 +1,15 @@
 import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get_time_ago/get_time_ago.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:rich_text_view/rich_text_view.dart';
 
-class TextItem extends StatefulWidget {
+class FileItem extends StatefulWidget {
   final int no;
 
   final String index;
-  final String text;
+  final List<String> files;
   final int length;
   final bool isSelected;
   final bool first;
@@ -17,13 +17,13 @@ class TextItem extends StatefulWidget {
   final DateTime updated;
   final Function(String) onChanged;
 
-  const TextItem({
+  const FileItem({
     super.key,
     required this.no,
     this.first = false,
     this.last = false,
     required this.index,
-    required this.text,
+    required this.files,
     required this.isSelected,
     required this.length,
     required this.updated,
@@ -31,10 +31,10 @@ class TextItem extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() => _TextItemState();
+  State<StatefulWidget> createState() => _FileItemState();
 }
 
-class _TextItemState extends State<TextItem> {
+class _FileItemState extends State<FileItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -84,20 +84,30 @@ class _TextItemState extends State<TextItem> {
                               right: ViewRegion.scaffoldBodyGap,
                               bottom: 6,
                             ),
-                            child: RichTextView(
-                              text: widget.text,
-                              truncate: true,
-                              viewLessText: '折叠',
-                              viewMoreText: '展开',
-                              selectable: true,
-                              maxLines: 10,
-                              textWidthBasis: TextWidthBasis.longestLine,
-                              linkStyle: TextStyle(),
-                              style: TextStyle(fontSize: 14),
-                              supportedTypes: [
-                                UrlParser(onTap: (matched) async {}),
-                                EmailParser(onTap: (v) {}),
-                              ],
+                            child: LayoutBuilder(
+                              builder:
+                                  (
+                                    BuildContext context,
+                                    BoxConstraints constraints,
+                                  ) {
+                                    return Stack(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topCenter,
+                                          child: SvgPicture.asset(
+                                            'asserts/file.svg',
+                                            fit: BoxFit.contain,
+                                            width: 160,
+                                            height: 160,
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Text(widget.files.first),
+                                        ),
+                                      ],
+                                    );
+                                  },
                             ),
                           ),
                         ),
@@ -130,14 +140,14 @@ class _TextItemState extends State<TextItem> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       SelectableText(
-                                        '文本',
+                                        '文件',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       SelectableText(
-                                        '${widget.length} 字符',
+                                        '${widget.files.length} 个文件',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 10,
