@@ -1,4 +1,4 @@
-import 'package:fast_clipboard/view/app/home.dart';
+import 'package:fast_clipboard/view/page/home.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,7 +8,7 @@ class Routes {
       GoRoute(
         path: '/',
         builder: (BuildContext context, GoRouterState state) {
-          return FastSendDesktopHomePage();
+          return FastClipboardHomePage();
         },
         routes: <RouteBase>[
 

@@ -1,6 +1,6 @@
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 //
-// import 'id_handler.dart';
+// import 'id_generator.dart';
 //
 // class NotificationHandler {
 //   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =

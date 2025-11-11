@@ -1,6 +1,6 @@
+import 'package:fast_clipboard/presenter/clipboard/clipboard_handler.dart';
 import 'package:fast_clipboard/presenter/database/database_handler.dart';
 import 'package:fast_clipboard/presenter/event/inapp_copy_event.dart';
-import 'package:fast_clipboard/presenter/handler/clipboard_handler.dart';
 import 'package:fast_clipboard/presenter/handler/event_handler.dart';
 import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +10,8 @@ import 'package:screen_retriever/screen_retriever.dart';
 import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
 
-class DefaultAppService {
-  static Future<void> ensureInitialized() async {
+class AppManager {
+  Future<void> initialized() async {
     WidgetsFlutterBinding.ensureInitialized();
 
     await DatabaseHandler.instance.create();
@@ -120,3 +120,5 @@ class DefaultAppService {
     );
   }
 }
+
+final appManager = AppManager();

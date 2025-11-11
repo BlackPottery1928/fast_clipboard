@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:fast_clipboard/presenter/event/record_event.dart';
 import 'package:fast_clipboard/presenter/handler/event_handler.dart';
-import 'package:fast_clipboard/presenter/handler/hash_handler.dart';
-import 'package:fast_clipboard/presenter/handler/id_handler.dart';
-import 'package:fast_clipboard/presenter/handler/logger_handler.dart';
+import 'package:fast_clipboard/common/hash_value.dart';
+import 'package:fast_clipboard/common/id_generator.dart';
+import 'package:fast_clipboard/common/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pasteboard/pasteboard.dart';
 
@@ -37,7 +37,7 @@ class ClipboardHandler {
           int length = currentText.length;
           if (_lastTextLength == length) {
             if (length >= 64) {
-              hash = hashHandler.generateHash(currentText.codeUnits);
+              hash = HashValue.generateHash(currentText.codeUnits);
               if (_lastTextHash == hash) {
                 return;
               }
@@ -52,10 +52,10 @@ class ClipboardHandler {
           _lastTextLength = length;
           _lastTextHash = hash.isNotEmpty
               ? hash
-              : hashHandler.generateHash(currentText.codeUnits);
+              : HashValue.generateHash(currentText.codeUnits);
 
           RecordEvent event = RecordEvent();
-          event.idx = idHandler.next();
+          event.idx = idGenerator.next();
           event.type = 'text';
           event.text = _lastText ?? '';
           event.hash = _lastTextHash ?? '';
@@ -66,7 +66,7 @@ class ClipboardHandler {
             return;
           }
 
-          String hash = hashHandler.generateHash(currentImage);
+          String hash = HashValue.generateHash(currentImage);
           if (hash == _lastImageHash) {
             return;
           }
@@ -75,7 +75,7 @@ class ClipboardHandler {
           _lastImageLength = currentImage.length;
 
           RecordEvent event = RecordEvent();
-          event.idx = idHandler.next();
+          event.idx = idGenerator.next();
           event.type = 'image';
           event.image = currentImage;
           event.hash = hash;
@@ -91,10 +91,10 @@ class ClipboardHandler {
           _lastFilesLength = currentFiles.length;
 
           RecordEvent event = RecordEvent();
-          event.idx = idHandler.next();
+          event.idx = idGenerator.next();
           event.type = 'file';
           event.files = currentFiles;
-          event.hash = hashHandler.generateHash(
+          event.hash = HashValue.generateHash(
             currentFiles.join(',').codeUnits,
           );
 

@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:fast_clipboard/model/entry/clipboard_entry.dart';
 import 'package:fast_clipboard/model/objectbox.g.dart';
 import 'package:fast_clipboard/presenter/event/record_event.dart';
-import 'package:fast_clipboard/presenter/handler/id_handler.dart';
+import 'package:fast_clipboard/common/id_generator.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:window_manager/window_manager.dart';
@@ -40,7 +40,7 @@ class DatabaseHandler {
     if (entity == null) {
       ClipboardEntity clipboardEntity = ClipboardEntity();
       clipboardEntity.hash = event.hash;
-      clipboardEntity.idx = IdHandler.instance.next();
+      clipboardEntity.idx = IdGenerator.instance.next();
       clipboardEntity.updatedAt = DateTime.now();
       clipboardEntity.type = event.type;
 

@@ -2,14 +2,14 @@ import 'dart:math';
 
 import 'package:uuid/uuid.dart';
 
-class IdHandler {
-  IdHandler._();
+class IdGenerator {
+  IdGenerator._();
 
   final Uuid _uuid = Uuid();
 
-  static final IdHandler _instance = IdHandler._();
+  static final IdGenerator _instance = IdGenerator._();
 
-  static IdHandler get instance => _instance;
+  static IdGenerator get instance => _instance;
 
   final Random _random = Random.secure();
   final String _alphabet = '0123456789';
@@ -36,4 +36,4 @@ class IdHandler {
   }
 }
 
-final IdHandler idHandler = IdHandler.instance;
+final IdGenerator idGenerator = IdGenerator.instance;

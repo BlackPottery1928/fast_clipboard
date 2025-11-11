@@ -3,8 +3,8 @@ import 'package:fast_clipboard/presenter/event/inapp_copy_event.dart';
 import 'package:fast_clipboard/presenter/event/record_event.dart';
 import 'package:fast_clipboard/presenter/handler/event_handler.dart';
 import 'package:fast_clipboard/presenter/provider/records_provider.dart';
-import 'package:fast_clipboard/view/app/infinite_list_view.dart';
-import 'package:fast_clipboard/view/app/toolbar.dart';
+import 'package:fast_clipboard/view/page/infinite_list_view.dart';
+import 'package:fast_clipboard/view/page/toolbar.dart';
 import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,15 +13,15 @@ import 'package:provider/provider.dart';
 import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
 
-class FastSendDesktopHomePage extends StatefulWidget {
-  const FastSendDesktopHomePage({super.key});
+class FastClipboardHomePage extends StatefulWidget {
+  const FastClipboardHomePage({super.key});
 
   @override
-  State<FastSendDesktopHomePage> createState() =>
-      _FastSendDesktopHomePageState();
+  State<FastClipboardHomePage> createState() =>
+      _FastClipboardHomePageState();
 }
 
-class _FastSendDesktopHomePageState extends State<FastSendDesktopHomePage>
+class _FastClipboardHomePageState extends State<FastClipboardHomePage>
     with TickerProviderStateMixin, TrayListener, WindowListener {
   @override
   void initState() {
