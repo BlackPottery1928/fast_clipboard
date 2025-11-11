@@ -77,10 +77,10 @@ packages:
     dependency: "direct dev"
     description:
       name: build_runner
-      sha256: a9461b8e586bf018dd4afd2e13b49b08c6a844a4b226c8d1d10f3a723cdd78c3
+      sha256: "04f69b1502f66e22ae7990bbd01eb552b7f12793c4d3ea6e715d0ac5e98bcdac"
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
-    version: "2.10.1"
+    version: "2.10.2"
   built_collection:
     dependency: transitive
     description:
@@ -593,26 +593,26 @@ packages:
     dependency: "direct main"
     description:
       name: objectbox
-      sha256: a735ea2ad3bc9af09827588b57c6823a85c54d929290f0c0c0e6da50778311e5
+      sha256: "9c7a37ef0b35fe64d67f58022809f0c82bd215b4e01d4cbf714d470b41237a25"
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
-    version: "5.0.1"
+    version: "5.0.2"
   objectbox_flutter_libs:
     dependency: "direct main"
     description:
       name: objectbox_flutter_libs
-      sha256: bf974c7fa525f65cd9d671fffb3086c3c2e1983fbce786f911b184b2e63861fd
+      sha256: "461b4052533820c4e3ec0600ac2cc1597d8bb998640f1812b999c02a19901676"
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
-    version: "5.0.1"
+    version: "5.0.2"
   objectbox_generator:
     dependency: "direct dev"
     description:
       name: objectbox_generator
-      sha256: "861144b5702b77b73f9375aa6bfe942dc1aabfd89eca484bc5e4ca5bd9362e4d"
+      sha256: cb3d3bd9b73c9b5f6795092bf939938aaaa49c826eca5980968fdf383246405b
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
-    version: "5.0.1"
+    version: "5.0.2"
   package_config:
     dependency: transitive
     description:

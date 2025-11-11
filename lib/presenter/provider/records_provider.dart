@@ -5,7 +5,6 @@ import 'package:fast_clipboard/presenter/event/inapp_copy_event.dart';
 import 'package:fast_clipboard/presenter/event/record_event.dart';
 import 'package:fast_clipboard/presenter/handler/clipboard_handler.dart';
 import 'package:flutter/foundation.dart';
-import 'package:hashlib/hashlib.dart' as hashlib;
 import 'package:window_manager/window_manager.dart';
 
 class RecordsProvider with ChangeNotifier {
@@ -13,28 +12,9 @@ class RecordsProvider with ChangeNotifier {
 
   List<RecordDefinition> get records => linked;
 
-  static String hashvalue(RecordEvent event) {
-    if (event.type == 'text') {
-      return hashlib.md5.convert(event.text.codeUnits).toString();
-    } else if (event.type == 'image') {
-      return hashlib.md5.convert(event.image).toString();
-    } else if (event.type == 'file') {
-      return hashlib.md5
-          .convert(
-            Uint8List.fromList(
-              databaseHandler.utf8codec.encode(event.files.join(',')),
-            ),
-          )
-          .toString();
-    }
-
-    return '';
-  }
-
   void addRecord(RecordEvent event) {
-    String textHashValue = hashvalue(event);
     RecordDefinition? exist = linked.firstWhere(
-      (element) => element.hash == textHashValue,
+      (element) => element.hash == event.hash,
       orElse: () => NotDefinition(),
     );
 
@@ -45,7 +25,7 @@ class RecordsProvider with ChangeNotifier {
       RecordDefinition definition = RecordDefinition();
       definition.idx = event.idx;
       definition.selected = false;
-      definition.hash = textHashValue;
+      definition.hash = event.hash;
       definition.updated = DateTime.now();
       definition.type = event.type;
 
@@ -119,12 +99,13 @@ class RecordsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void copyRecord(InAppCopyEvent event) {
+  void copyRecord(InAppCopyEvent event) async {
     for (var record in linked) {
       if (record.selected) {
         if (record.type == 'text') {
           clipboardHandler.copy(record.text, 'text/plain');
         } else if (record.type == 'image') {
+          await clipboardHandler.copyImage(record.image);
         } else if (record.type == 'file') {
           clipboardHandler.copyFiles(record.files);
         }

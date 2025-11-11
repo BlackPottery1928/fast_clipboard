@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fast_clipboard/presenter/event/record_event.dart';
 import 'package:fast_clipboard/presenter/handler/event_handler.dart';
+import 'package:fast_clipboard/presenter/handler/hash_handler.dart';
 import 'package:fast_clipboard/presenter/handler/id_handler.dart';
 import 'package:fast_clipboard/presenter/handler/logger_handler.dart';
 import 'package:flutter/foundation.dart';
@@ -14,50 +15,93 @@ class ClipboardHandler {
 
   static ClipboardHandler get instance => _instance;
 
-  String? _lastData;
-  Uint8List? _lastImage;
-  List<String>? _lastFiles;
+  late String? _lastText;
+  late String? _lastTextHash;
+  late int _lastTextLength = -1;
+
+  late String _lastImageHash = '';
+  late int _lastImageLength = -1;
+
+  late List<String> _lastFiles = [];
+  late int _lastFilesLength = -1;
 
   Future<void> startMonitoring() async {
-    Timer.periodic(Duration(milliseconds: 10), (timer) async {
+    Timer.periodic(Duration(milliseconds: 20), (timer) async {
       try {
-        final currentData = await Pasteboard.text;
-        final currentImage = await Pasteboard.image;
-        final currentFiles = await Pasteboard.files();
+        final String? currentText = await Pasteboard.text;
+        final Uint8List? currentImage = await Pasteboard.image;
+        final List<String> currentFiles = await Pasteboard.files();
 
-        if (_lastData != currentData) {
-          _lastData = currentData;
+        if (currentText != null && currentText.isNotEmpty) {
+          String hash = '';
+          int length = currentText.length;
+          if (_lastTextLength == length) {
+            if (length >= 64) {
+              hash = hashHandler.generateHash(currentText.codeUnits);
+              if (_lastTextHash == hash) {
+                return;
+              }
+            } else {
+              if (_lastText == currentText) {
+                return;
+              }
+            }
+          }
+
+          _lastText = currentText;
+          _lastTextLength = length;
+          _lastTextHash = hash.isNotEmpty
+              ? hash
+              : hashHandler.generateHash(currentText.codeUnits);
 
           RecordEvent event = RecordEvent();
           event.idx = idHandler.next();
           event.type = 'text';
-          event.text = _lastData ?? '';
+          event.text = _lastText ?? '';
+          event.hash = _lastTextHash ?? '';
+
           eventHandler.publish(event);
-        } else if (_lastImage != currentImage) {
-          _lastImage = currentImage;
+        } else if (currentImage != null && currentImage.isNotEmpty) {
+          if (_lastImageLength == currentImage.length) {
+            return;
+          }
+
+          String hash = hashHandler.generateHash(currentImage);
+          if (hash == _lastImageHash) {
+            return;
+          }
+
+          _lastImageHash = hash;
+          _lastImageLength = currentImage.length;
 
           RecordEvent event = RecordEvent();
           event.idx = idHandler.next();
           event.type = 'image';
-          event.image = currentImage!;
+          event.image = currentImage;
+          event.hash = hash;
 
           eventHandler.publish(event);
         } else if (currentFiles.isNotEmpty) {
-          if (listEquals(_lastFiles, currentFiles)) {
+          if (_lastFilesLength == currentFiles.length &&
+              listEquals(_lastFiles, currentFiles)) {
             return;
           }
 
-          // print(currentFiles);
           _lastFiles = currentFiles;
+          _lastFilesLength = currentFiles.length;
 
           RecordEvent event = RecordEvent();
           event.idx = idHandler.next();
           event.type = 'file';
           event.files = currentFiles;
+          event.hash = hashHandler.generateHash(
+            currentFiles.join(',').codeUnits,
+          );
+
           eventHandler.publish(event);
         }
       } catch (e) {
-        logger.info(e.toString());
+        logger.info("监听剪切板异常: ${e.toString()}");
       }
     });
   }
@@ -68,6 +112,10 @@ class ClipboardHandler {
 
   Future<void> copyFiles(List<String> value) async {
     Pasteboard.writeFiles(value);
+  }
+
+  Future<void> copyImage(Uint8List image) async {
+    await Pasteboard.writeImage(image);
   }
 }
 

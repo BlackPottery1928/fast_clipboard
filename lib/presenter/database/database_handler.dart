@@ -5,7 +5,6 @@ import 'package:fast_clipboard/model/entry/clipboard_entry.dart';
 import 'package:fast_clipboard/model/objectbox.g.dart';
 import 'package:fast_clipboard/presenter/event/record_event.dart';
 import 'package:fast_clipboard/presenter/handler/id_handler.dart';
-import 'package:fast_clipboard/presenter/provider/records_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:window_manager/window_manager.dart';
@@ -34,18 +33,15 @@ class DatabaseHandler {
   }
 
   Future<void> insert(RecordEvent event) async {
-    String textHashValue = RecordsProvider.hashvalue(event);
-
     ClipboardEntity? entity = clipboardEntityBox
-        .query(ClipboardEntity_.hash.equals(textHashValue))
+        .query(ClipboardEntity_.hash.equals(event.hash))
         .build()
         .findFirst();
     if (entity == null) {
       ClipboardEntity clipboardEntity = ClipboardEntity();
-      clipboardEntity.hash = textHashValue;
+      clipboardEntity.hash = event.hash;
       clipboardEntity.idx = IdHandler.instance.next();
       clipboardEntity.updatedAt = DateTime.now();
-
       clipboardEntity.type = event.type;
 
       if (event.type == "text") {
