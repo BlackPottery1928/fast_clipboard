@@ -1,4 +1,4 @@
-import 'package:fast_clipboard/presenter/database/database_handler.dart';
+import 'package:fast_clipboard/presenter/storage/database_handler.dart';
 import 'package:fast_clipboard/presenter/event/inapp_copy_event.dart';
 import 'package:fast_clipboard/presenter/event/record_event.dart';
 import 'package:fast_clipboard/presenter/handler/event_handler.dart';

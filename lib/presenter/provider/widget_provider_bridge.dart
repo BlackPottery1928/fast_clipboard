@@ -2,16 +2,16 @@ import 'package:fast_clipboard/presenter/provider/records_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class StateManagement extends StatefulWidget {
+class WidgetProviderBridge extends StatefulWidget {
   final Widget child;
 
-  const StateManagement({super.key, required this.child});
+  const WidgetProviderBridge({super.key, required this.child});
 
   @override
-  State<StatefulWidget> createState() => _StateManagementState();
+  State<StatefulWidget> createState() => _WidgetProviderBridgeState();
 }
 
-class _StateManagementState extends State<StateManagement> {
+class _WidgetProviderBridgeState extends State<WidgetProviderBridge> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

@@ -1,4 +1,4 @@
-import 'package:fast_clipboard/presenter/database/database_handler.dart';
+import 'package:fast_clipboard/presenter/storage/database_handler.dart';
 import 'package:fast_clipboard/presenter/provider/records_provider.dart';
 import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:flutter/material.dart';

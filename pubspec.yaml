@@ -43,7 +43,6 @@ dependencies:
   path: ^1.9.1
   path_provider: ^2.1.5
   gap: ^3.0.1
-  clipboard: ^2.0.2
   pasteboard: ^0.4.0
   super_clipboard: ^0.9.1
   window_manager: ^0.5.1
