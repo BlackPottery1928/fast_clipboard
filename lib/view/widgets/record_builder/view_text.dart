@@ -5,14 +5,8 @@ import 'package:rich_text_view/rich_text_view.dart';
 class ViewText extends StatefulWidget {
   final String index;
   final RecordDefinition definition;
-  final Function(String) onChanged;
 
-  const ViewText({
-    super.key,
-    required this.index,
-    required this.onChanged,
-    required this.definition,
-  });
+  const ViewText({super.key, required this.index, required this.definition});
 
   @override
   State<StatefulWidget> createState() => _ViewTextState();

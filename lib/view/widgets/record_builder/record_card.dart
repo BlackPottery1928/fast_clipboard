@@ -1,3 +1,4 @@
+import 'package:fast_clipboard/common/file_sizes.dart';
 import 'package:fast_clipboard/model/contract/record_definition.dart';
 import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:fast_clipboard/view/widgets/record_builder/drag_widget.dart';
@@ -6,6 +7,7 @@ import 'package:fast_clipboard/view/widgets/record_builder/timeline_paint.dart';
 import 'package:fast_clipboard/view/widgets/record_builder/view_file.dart';
 import 'package:fast_clipboard/view/widgets/record_builder/view_image.dart';
 import 'package:fast_clipboard/view/widgets/record_builder/view_text.dart';
+import 'package:fast_clipboard/view/widgets/unknown.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get_time_ago/get_time_ago.dart';
@@ -44,6 +46,7 @@ class _RecordCardState extends State<RecordCard> {
       },
       child: DragWidget(
         child: Stack(
+          alignment: Alignment.topCenter,
           children: [
             _buildBoxDecoration(
               _buildRecordBodyWidget(widget.definition),
@@ -61,17 +64,13 @@ class _RecordCardState extends State<RecordCard> {
   Widget _buildRecordBodyWidget(RecordDefinition definition) {
     Widget child;
     if (definition.type == "text") {
-      child = ViewText(
-        index: definition.idx,
-        onChanged: (String p1) {},
-        definition: definition,
-      );
+      child = ViewText(index: definition.idx, definition: definition);
     } else if (definition.type == "image") {
       child = ViewImage(index: definition.idx, image: definition.image);
     } else if (definition.type == "file") {
       child = ViewFile(index: definition.idx, files: definition.files);
     } else {
-      child = Container();
+      child = Unknown();
     }
 
     return LayoutBuilder(
@@ -122,6 +121,19 @@ class _RecordCardState extends State<RecordCard> {
     String type = '未知';
     if (definition.type == "text") {
       type = '文本';
+    } else if (definition.type == "image") {
+      type = '图片';
+    } else if (definition.type == "file") {
+      type = '文件';
+    }
+
+    String size = '未知';
+    if (definition.type == "text") {
+      size = "${definition.text.length.toString()} 字符";
+    } else if (definition.type == "image") {
+      size = FileSize.getSize(definition.image);
+    } else if (definition.type == "file") {
+      size = "${definition.files.length.toString()} 个文件";
     }
 
     return Column(
@@ -133,7 +145,7 @@ class _RecordCardState extends State<RecordCard> {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         SelectableText(
-          '字符',
+          size,
           style: TextStyle(color: Colors.white, fontSize: 10),
         ),
       ],
@@ -154,33 +166,27 @@ class _RecordCardState extends State<RecordCard> {
             Stack(
               alignment: Alignment.center,
               children: [
-                Align(alignment: Alignment.center, child: TimelinePaint()),
-                Align(
+                TimelinePaint(),
+                Container(
                   alignment: Alignment.center,
-                  child: Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: widget.isSelected
-                          ? Theme.of(context).primaryColor
-                          : Colors.black12,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    width: 10,
-                    height: 10,
+                  decoration: BoxDecoration(
+                    color: widget.isSelected
+                        ? Theme.of(context).primaryColor
+                        : Colors.black12,
+                    borderRadius: BorderRadius.circular(10),
                   ),
+                  width: 10,
+                  height: 10,
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: widget.isSelected
-                          ? Colors.transparent
-                          : Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    width: 7,
-                    height: 7,
+                Container(
+                  decoration: BoxDecoration(
+                    color: widget.isSelected
+                        ? Colors.transparent
+                        : Colors.white,
+                    borderRadius: BorderRadius.circular(10),
                   ),
+                  width: 7,
+                  height: 7,
                 ),
               ],
             ),

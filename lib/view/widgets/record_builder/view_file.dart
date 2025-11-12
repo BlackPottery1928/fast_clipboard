@@ -28,7 +28,10 @@ class _ViewFileState extends State<ViewFile> {
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: Text(widget.files.first),
+            child: SelectableText(
+              widget.files.first,
+              style: const TextStyle(fontSize: 12, color: Colors.grey),
+            ),
           ),
         ],
       ),
