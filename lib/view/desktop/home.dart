@@ -1,32 +1,29 @@
-import 'package:fast_clipboard/presenter/storage/database_handler.dart';
+import 'package:fast_clipboard/presenter/event/event_handler.dart';
 import 'package:fast_clipboard/presenter/event/inapp_copy_event.dart';
 import 'package:fast_clipboard/presenter/event/record_event.dart';
-import 'package:fast_clipboard/presenter/event/event_handler.dart';
 import 'package:fast_clipboard/presenter/provider/records_provider.dart';
-import 'package:fast_clipboard/view/page/infinite_list_view.dart';
-import 'package:fast_clipboard/view/page/toolbar.dart';
+import 'package:fast_clipboard/presenter/storage/database_handler.dart';
+import 'package:fast_clipboard/view/desktop/data_view.dart';
+import 'package:fast_clipboard/view/desktop/toolbar.dart';
 import 'package:fast_clipboard/view/theme/view_region.dart';
+import 'package:fast_clipboard/view/widgets/framework_state_listener.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:tray_manager/tray_manager.dart';
-import 'package:window_manager/window_manager.dart';
 
 class FastClipboardHomePage extends StatefulWidget {
   const FastClipboardHomePage({super.key});
 
   @override
-  State<FastClipboardHomePage> createState() =>
-      _FastClipboardHomePageState();
+  State<FastClipboardHomePage> createState() => _FastClipboardHomePageState();
 }
 
-class _FastClipboardHomePageState extends State<FastClipboardHomePage>
-    with TickerProviderStateMixin, TrayListener, WindowListener {
+class _FastClipboardHomePageState
+    extends FrameworkStateListener<FastClipboardHomePage> {
   @override
   void initState() {
-    trayManager.addListener(this);
-    windowManager.addListener(this);
+    super.initState();
 
     ServicesBinding.instance.addPostFrameCallback((c) {
       EventHandler.instance.eventBus.on<RecordEvent>().listen((event) async {
@@ -40,45 +37,6 @@ class _FastClipboardHomePageState extends State<FastClipboardHomePage>
 
       Provider.of<RecordsProvider>(context, listen: false).loadRecords();
     });
-
-    super.initState();
-  }
-
-  @override
-  void onTrayIconRightMouseDown() {
-    trayManager.popUpContextMenu();
-  }
-
-  @override
-  Future<void> onTrayIconMouseDown() async {
-    if (!(await windowManager.isVisible())) {
-      await windowManager.show(inactive: true);
-    }
-  }
-
-  @override
-  void onTrayMenuItemClick(MenuItem menuItem) {
-    if (menuItem.key == 'show_window') {
-      // do something
-    } else if (menuItem.key == 'exit_app') {
-      // do something
-    }
-  }
-
-  @override
-  Future<void> onWindowBlur() async {
-    if (await windowManager.isVisible()) {
-      await windowManager.hide();
-    }
-
-    super.onWindowBlur();
-  }
-
-  @override
-  void dispose() {
-    trayManager.removeListener(this);
-    windowManager.removeListener(this);
-    super.dispose();
   }
 
   @override
@@ -97,7 +55,7 @@ class _FastClipboardHomePageState extends State<FastClipboardHomePage>
                 color: Colors.black26,
               ),
               Toolbar(),
-              InfiniteListView(),
+              DataView(),
             ],
           ),
         ),

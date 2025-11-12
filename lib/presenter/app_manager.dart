@@ -1,9 +1,8 @@
 import 'package:fast_clipboard/presenter/clipboard/clipboard_handler.dart';
-import 'package:fast_clipboard/presenter/storage/database_handler.dart';
-import 'package:fast_clipboard/presenter/event/inapp_copy_event.dart';
 import 'package:fast_clipboard/presenter/event/event_handler.dart';
+import 'package:fast_clipboard/presenter/event/inapp_copy_event.dart';
+import 'package:fast_clipboard/presenter/storage/database_handler.dart';
 import 'package:fast_clipboard/view/theme/view_region.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:screen_retriever/screen_retriever.dart';

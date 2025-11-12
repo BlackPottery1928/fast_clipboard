@@ -1,5 +1,5 @@
-import 'package:fast_clipboard/presenter/storage/database_handler.dart';
 import 'package:fast_clipboard/presenter/provider/records_provider.dart';
+import 'package:fast_clipboard/presenter/storage/database_handler.dart';
 import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -39,7 +39,7 @@ class _ToolbarState extends State<Toolbar> {
                   hintText: '搜索',
                   fillColor: HexColor('#FAFAFC'),
                   filled: true,
-                  hintStyle: TextStyle(fontSize: 14),
+                  hintStyle: TextStyle(fontSize: 14, color: Colors.grey),
                   contentPadding: EdgeInsets.zero,
                   suffixIcon: IconButton(
                     icon: Icon(Icons.close),

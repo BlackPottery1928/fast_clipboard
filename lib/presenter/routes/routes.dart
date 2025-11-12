@@ -1,4 +1,4 @@
-import 'package:fast_clipboard/view/page/home.dart';
+import 'package:fast_clipboard/view/desktop/home.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
