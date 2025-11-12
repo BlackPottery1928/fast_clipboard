@@ -95,7 +95,7 @@ class _FileItemState extends State<FileItem> {
                                         Align(
                                           alignment: Alignment.topCenter,
                                           child: SvgPicture.asset(
-                                            'asserts/file.svg',
+                                            'assets/file.svg',
                                             fit: BoxFit.contain,
                                             width: 160,
                                             height: 160,

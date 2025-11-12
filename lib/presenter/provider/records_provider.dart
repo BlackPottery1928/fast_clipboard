@@ -1,5 +1,5 @@
 import 'package:fast_clipboard/model/entry/clipboard_entry.dart';
-import 'package:fast_clipboard/model/record_definition.dart';
+import 'package:fast_clipboard/model/contract/record_definition.dart';
 import 'package:fast_clipboard/presenter/storage/database_handler.dart';
 import 'package:fast_clipboard/presenter/event/inapp_copy_event.dart';
 import 'package:fast_clipboard/presenter/event/record_event.dart';

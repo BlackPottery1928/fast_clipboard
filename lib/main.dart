@@ -4,6 +4,8 @@ import 'package:fast_clipboard/view/fast_clipboard.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   // 初始化配置
   await appManager.initialized();
 

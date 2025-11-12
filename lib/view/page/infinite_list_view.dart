@@ -1,4 +1,4 @@
-import 'package:fast_clipboard/model/record_definition.dart';
+import 'package:fast_clipboard/model/contract/record_definition.dart';
 import 'package:fast_clipboard/presenter/provider/records_provider.dart';
 import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:fast_clipboard/view/widgets/content_type/file_item.dart';

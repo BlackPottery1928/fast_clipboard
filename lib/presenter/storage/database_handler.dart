@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:fast_clipboard/model/entry/clipboard_entry.dart';
-import 'package:fast_clipboard/model/objectbox.g.dart';
+import 'package:fast_clipboard/model/generate/objectbox.g.dart';
 import 'package:fast_clipboard/presenter/event/record_event.dart';
 import 'package:fast_clipboard/common/id_generator.dart';
 import 'package:path/path.dart' as p;

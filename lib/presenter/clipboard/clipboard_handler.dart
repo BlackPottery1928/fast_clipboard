@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:fast_clipboard/presenter/event/record_event.dart';
-import 'package:fast_clipboard/presenter/handler/event_handler.dart';
+import 'package:fast_clipboard/presenter/event/event_handler.dart';
 import 'package:fast_clipboard/common/hash_value.dart';
 import 'package:fast_clipboard/common/id_generator.dart';
 import 'package:fast_clipboard/presenter/logger/logger.dart';

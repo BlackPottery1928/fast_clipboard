@@ -1,7 +1,7 @@
 import 'package:fast_clipboard/presenter/clipboard/clipboard_handler.dart';
 import 'package:fast_clipboard/presenter/storage/database_handler.dart';
 import 'package:fast_clipboard/presenter/event/inapp_copy_event.dart';
-import 'package:fast_clipboard/presenter/handler/event_handler.dart';
+import 'package:fast_clipboard/presenter/event/event_handler.dart';
 import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,8 +12,6 @@ import 'package:window_manager/window_manager.dart';
 
 class AppManager {
   Future<void> initialized() async {
-    WidgetsFlutterBinding.ensureInitialized();
-
     await DatabaseHandler.instance.create();
 
     ClipboardHandler.instance.startMonitoring();
@@ -36,7 +34,7 @@ class AppManager {
       await windowManager.hide();
     });
 
-    await trayManager.setIcon('asserts/tray-logo.ico');
+    await trayManager.setIcon('assets/tray-logo.ico');
     await trayManager.setToolTip("FastClipboard");
     Menu menu = Menu(
       items: [
