@@ -1,4 +1,3 @@
-import 'package:fast_clipboard/common/file_sizes.dart';
 import 'package:fast_clipboard/model/contract/record_definition.dart';
 import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:fast_clipboard/view/widgets/record_builder/drag_widget.dart';
@@ -12,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get_time_ago/get_time_ago.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:filesize/filesize.dart';
 
 class RecordCard extends StatefulWidget {
   final String index;
@@ -131,7 +131,7 @@ class _RecordCardState extends State<RecordCard> {
     if (definition.type == "text") {
       size = "${definition.text.length.toString()} 字符";
     } else if (definition.type == "image") {
-      size = FileSize.getSize(definition.image);
+      size = filesize(definition.image.length);
     } else if (definition.type == "file") {
       size = "${definition.files.length.toString()} 个文件";
     }
