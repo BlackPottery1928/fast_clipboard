@@ -8,7 +8,6 @@ class RecordDefinition {
   late List<String> files;
   
   late int length = 0;
-  late bool selected = false;
   late String hash = '';
   late DateTime updated;
 

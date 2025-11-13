@@ -11,7 +11,6 @@ class EntryRecordConverter {
     RecordDefinition definition = RecordDefinition();
     definition.index = entry.idx;
     definition.length = entry.size;
-    definition.selected = false;
     definition.updated = entry.updatedAt;
     definition.type = entry.type;
     // 处理格式数据
@@ -47,13 +46,16 @@ class EntryRecordConverter {
 
   static RecordProxy fromDefinition(RecordDefinition definition) {
     RecordProxy proxy = RecordProxy();
+    proxy.index = definition.index;
+    proxy.hash = definition.hash;
+    proxy.definition = definition;
+    proxy.selected = false;
     return proxy;
   }
 
   static RecordDefinition toDefinition(RecordEvent event) {
     RecordDefinition definition = RecordDefinition();
     definition.index = event.idx;
-    definition.selected = false;
     definition.hash = event.hash;
     definition.updated = DateTime.now();
     definition.type = event.type;
