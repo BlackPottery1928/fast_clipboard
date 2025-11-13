@@ -1,4 +1,4 @@
-import 'package:fast_clipboard/presenter/provider/records_provider.dart';
+import 'package:fast_clipboard/presenter/provider/record_proxy_provider.dart';
 import 'package:fast_clipboard/presenter/storage/database_handler.dart';
 import 'package:fast_clipboard/view/theme/view_region.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +73,7 @@ class _ToolbarState extends State<Toolbar> {
             child: IconButton(
               icon: Icon(Icons.delete),
               onPressed: () {
-                Provider.of<RecordsProvider>(context, listen: false).clear();
+                Provider.of<RecordProxyProvider>(context, listen: false).clear();
                 DatabaseHandler.instance.clear();
               },
             ),

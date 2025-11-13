@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 class RecordDefinition {
-  late String idx;
+  late String index;
   late String type = 'text';
   late String text;
   late Uint8List image;

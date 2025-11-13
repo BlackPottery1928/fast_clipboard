@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fast_clipboard/common/hash_value.dart';
 import 'package:fast_clipboard/common/id_generator.dart';
+import 'package:fast_clipboard/model/contract/record_definition.dart';
 import 'package:fast_clipboard/presenter/event/event_handler.dart';
 import 'package:fast_clipboard/presenter/event/record_event.dart';
 import 'package:fast_clipboard/presenter/logger/logger.dart';
@@ -94,9 +95,7 @@ class ClipboardHandler {
           event.idx = idGenerator.next();
           event.type = 'file';
           event.files = currentFiles;
-          event.hash = HashValue.generateHash(
-            currentFiles.join(',').codeUnits,
-          );
+          event.hash = HashValue.generateHash(currentFiles.join(',').codeUnits);
 
           eventHandler.publish(event);
         }
@@ -116,6 +115,16 @@ class ClipboardHandler {
 
   Future<void> copyImage(Uint8List image) async {
     await Pasteboard.writeImage(image);
+  }
+
+  Future<void> paste(RecordDefinition record) async {
+    if (record.type == 'text') {
+      copy(record.text, 'text/plain');
+    } else if (record.type == 'image') {
+      await copyImage(record.image);
+    } else if (record.type == 'file') {
+      copyFiles(record.files);
+    }
   }
 }
 

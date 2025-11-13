@@ -1,7 +1,7 @@
 import 'package:fast_clipboard/presenter/event/event_handler.dart';
 import 'package:fast_clipboard/presenter/event/inapp_copy_event.dart';
 import 'package:fast_clipboard/presenter/event/record_event.dart';
-import 'package:fast_clipboard/presenter/provider/records_provider.dart';
+import 'package:fast_clipboard/presenter/provider/record_proxy_provider.dart';
 import 'package:fast_clipboard/presenter/storage/database_handler.dart';
 import 'package:fast_clipboard/view/desktop/data_view.dart';
 import 'package:fast_clipboard/view/desktop/toolbar.dart';
@@ -27,15 +27,15 @@ class _FastClipboardHomePageState
 
     ServicesBinding.instance.addPostFrameCallback((c) {
       EventHandler.instance.eventBus.on<RecordEvent>().listen((event) async {
-        Provider.of<RecordsProvider>(context, listen: false).addRecord(event);
+        Provider.of<RecordProxyProvider>(context, listen: false).addRecord(event);
         await databaseHandler.insert(event);
       });
 
       EventHandler.instance.eventBus.on<InAppCopyEvent>().listen((event) async {
-        Provider.of<RecordsProvider>(context, listen: false).copyRecord(event);
+        Provider.of<RecordProxyProvider>(context, listen: false).copyRecord(event);
       });
 
-      Provider.of<RecordsProvider>(context, listen: false).loadRecords();
+      Provider.of<RecordProxyProvider>(context, listen: false).loadRecords();
     });
   }
 

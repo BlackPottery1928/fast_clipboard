@@ -64,11 +64,11 @@ class _RecordCardState extends State<RecordCard> {
   Widget _buildRecordBodyWidget(RecordDefinition definition) {
     Widget child;
     if (definition.type == "text") {
-      child = ViewText(index: definition.idx, definition: definition);
+      child = ViewText(index: definition.index, definition: definition);
     } else if (definition.type == "image") {
-      child = ViewImage(index: definition.idx, image: definition.image);
+      child = ViewImage(index: definition.index, image: definition.image);
     } else if (definition.type == "file") {
-      child = ViewFile(index: definition.idx, files: definition.files);
+      child = ViewFile(index: definition.index, files: definition.files);
     } else {
       child = Unknown();
     }
