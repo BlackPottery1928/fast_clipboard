@@ -30,7 +30,7 @@ class ClipboardHandler {
     Timer.periodic(Duration(milliseconds: 20), (timer) async {
       try {
         final String? currentText = await Pasteboard.text;
-        final Uint8List? currentImage = await Pasteboard.image;
+        // final Uint8List? currentImage = await Pasteboard.image;
         final List<String> currentFiles = await Pasteboard.files();
 
         if (currentText != null && currentText.isNotEmpty) {
@@ -62,27 +62,29 @@ class ClipboardHandler {
           event.hash = _lastTextHash ?? '';
 
           eventHandler.publish(event);
-        } else if (currentImage != null && currentImage.isNotEmpty) {
-          if (_lastImageLength == currentImage.length) {
-            return;
-          }
-
-          String hash = HashValue.generateHash(currentImage);
-          if (hash == _lastImageHash) {
-            return;
-          }
-
-          _lastImageHash = hash;
-          _lastImageLength = currentImage.length;
-
-          RecordEvent event = RecordEvent();
-          event.idx = idGenerator.next();
-          event.type = 'image';
-          event.image = currentImage;
-          event.hash = hash;
-
-          eventHandler.publish(event);
-        } else if (currentFiles.isNotEmpty) {
+        }
+        // else if (currentImage != null && currentImage.isNotEmpty) {
+        //   if (_lastImageLength == currentImage.length) {
+        //     return;
+        //   }
+        //
+        //   String hash = HashValue.generateHash(currentImage);
+        //   if (hash == _lastImageHash) {
+        //     return;
+        //   }
+        //
+        //   _lastImageHash = hash;
+        //   _lastImageLength = currentImage.length;
+        //
+        //   RecordEvent event = RecordEvent();
+        //   event.idx = idGenerator.next();
+        //   event.type = 'image';
+        //   event.image = currentImage;
+        //   event.hash = hash;
+        //
+        //   eventHandler.publish(event);
+        // }
+        else if (currentFiles.isNotEmpty) {
           if (_lastFilesLength == currentFiles.length &&
               listEquals(_lastFiles, currentFiles)) {
             return;

@@ -20,64 +20,64 @@ class _ToolbarState extends State<Toolbar> {
       height: ViewRegion.scaffoldToolbarHeight,
       child: Stack(
         children: [
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              width: 340,
-              height: ViewRegion.scaffoldToolbarHeight,
-              alignment: Alignment.center,
-              child: TextFormField(
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.next,
-                toolbarOptions: ToolbarOptions(selectAll: true, paste: true),
-                cursorHeight: 18,
-                onChanged: (value) {},
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search, color: Colors.black26),
-                  prefixIconConstraints: BoxConstraints(minWidth: 32),
-                  isDense: true,
-                  hintText: '搜索',
-                  fillColor: HexColor('#FAFAFC'),
-                  filled: true,
-                  hintStyle: TextStyle(fontSize: 14, color: Colors.grey),
-                  contentPadding: EdgeInsets.zero,
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.close),
-                    onPressed: () {},
-                    splashColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    color: Colors.black26,
-                  ),
-                  constraints: BoxConstraints(maxHeight: 32),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(18),
-                    borderSide: BorderSide(color: Colors.black12),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(18),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                      width: 1.5,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(18),
-                    borderSide: BorderSide(color: Colors.transparent),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () {
-                Provider.of<RecordProxyProvider>(context, listen: false).clear();
-                DatabaseHandler.instance.clear();
-              },
-            ),
-          ),
+          // Align(
+          //   alignment: Alignment.center,
+          //   child: Container(
+          //     width: 340,
+          //     height: ViewRegion.scaffoldToolbarHeight,
+          //     alignment: Alignment.center,
+          //     child: TextFormField(
+          //       keyboardType: TextInputType.text,
+          //       textInputAction: TextInputAction.next,
+          //       toolbarOptions: ToolbarOptions(selectAll: true, paste: true),
+          //       cursorHeight: 18,
+          //       onChanged: (value) {},
+          //       decoration: InputDecoration(
+          //         prefixIcon: Icon(Icons.search, color: Colors.black26),
+          //         prefixIconConstraints: BoxConstraints(minWidth: 32),
+          //         isDense: true,
+          //         hintText: '搜索',
+          //         fillColor: HexColor('#FAFAFC'),
+          //         filled: true,
+          //         hintStyle: TextStyle(fontSize: 14, color: Colors.grey),
+          //         contentPadding: EdgeInsets.zero,
+          //         suffixIcon: IconButton(
+          //           icon: Icon(Icons.close),
+          //           onPressed: () {},
+          //           splashColor: Colors.transparent,
+          //           hoverColor: Colors.transparent,
+          //           color: Colors.black26,
+          //         ),
+          //         constraints: BoxConstraints(maxHeight: 32),
+          //         border: OutlineInputBorder(
+          //           borderRadius: BorderRadius.circular(18),
+          //           borderSide: BorderSide(color: Colors.black12),
+          //         ),
+          //         focusedBorder: OutlineInputBorder(
+          //           borderRadius: BorderRadius.circular(18),
+          //           borderSide: BorderSide(
+          //             color: Theme.of(context).primaryColor,
+          //             width: 1.5,
+          //           ),
+          //         ),
+          //         enabledBorder: OutlineInputBorder(
+          //           borderRadius: BorderRadius.circular(18),
+          //           borderSide: BorderSide(color: Colors.transparent),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // Align(
+          //   alignment: Alignment.centerLeft,
+          //   child: IconButton(
+          //     icon: Icon(Icons.delete),
+          //     onPressed: () {
+          //       Provider.of<RecordProxyProvider>(context, listen: false).clear();
+          //       DatabaseHandler.instance.clear();
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );
