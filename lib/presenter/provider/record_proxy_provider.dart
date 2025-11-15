@@ -17,7 +17,6 @@ class RecordProxyProvider with ChangeNotifier {
   List<RecordProxy> get records => proxys;
 
   void addRecord(RecordEvent event) {
-    logger.info('event: ${event.text}');
     logger.info('event: ${event.hash}');
     RecordProxy? exist;
     for (var element in proxys) {
