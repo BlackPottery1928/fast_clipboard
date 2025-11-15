@@ -93,7 +93,7 @@ class _RecordCardState extends State<RecordCard> {
       child: Stack(
         children: [
           Align(
-            alignment: Alignment.centerLeft,
+            alignment: .centerLeft,
             child: Padding(
               padding: EdgeInsetsGeometry.only(
                 left: ViewRegion.scaffoldBodyGap,

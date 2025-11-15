@@ -40,7 +40,7 @@ class DatabaseHandler {
     if (entity == null) {
       ClipboardEntity clipboardEntity = ClipboardEntity();
       clipboardEntity.hash = event.hash;
-      clipboardEntity.idx = IdGenerator.instance.next();
+      clipboardEntity.idx = event.idx;
       clipboardEntity.updatedAt = DateTime.now();
       clipboardEntity.type = event.type;
 

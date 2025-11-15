@@ -13,6 +13,7 @@ class EntryRecordConverter {
     definition.length = entry.size;
     definition.updated = entry.updatedAt;
     definition.type = entry.type;
+    definition.hash = entry.hash;
     // 处理格式数据
     if (entry.type == 'text') {
       definition.text = databaseHandler.utf8codec.decode(

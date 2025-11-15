@@ -6,7 +6,7 @@ class RecordEvent {
   late String text;
   late Uint8List image;
   late List<String> files;
-  late String hash = '';
+  late String hash;
 
   RecordEvent();
 }

@@ -5,6 +5,7 @@ import 'package:fast_clipboard/model/entry/clipboard_entry.dart';
 import 'package:fast_clipboard/presenter/clipboard/clipboard_handler.dart';
 import 'package:fast_clipboard/presenter/event/inapp_copy_event.dart';
 import 'package:fast_clipboard/presenter/event/record_event.dart';
+import 'package:fast_clipboard/presenter/logger/logger.dart';
 import 'package:fast_clipboard/presenter/storage/database_handler.dart';
 import 'package:flutter/foundation.dart';
 import 'package:window_manager/window_manager.dart';
@@ -16,6 +17,8 @@ class RecordProxyProvider with ChangeNotifier {
   List<RecordProxy> get records => proxys;
 
   void addRecord(RecordEvent event) {
+    logger.info('event: ${event.text}');
+    logger.info('event: ${event.hash}');
     RecordProxy? exist;
     for (var element in proxys) {
       if (element.hash == event.hash) {
@@ -24,21 +27,26 @@ class RecordProxyProvider with ChangeNotifier {
       }
     }
 
-    if (exist != null) {
-      proxys.remove(exist);
-      _addRecord(exist);
-    } else {
+    if (exist == null) {
       RecordDefinition definition = EntryRecordConverter.toDefinition(event);
       RecordProxy proxy = EntryRecordConverter.fromDefinition(definition);
-      _addRecord(proxy);
+      proxys.insert(0, proxy);
+      logger.info('addRecord: ${proxy.hash}');
+    } else {
+      _addRecord(exist);
     }
 
     notifyListeners();
   }
 
-  Future<void> _addRecord(RecordProxy definition) async {
-    if (!(await windowManager.isVisible())) {
-      proxys.insert(0, definition);
+  Future<void> _addRecord(RecordProxy exist) async {
+    bool visible = await windowManager.isVisible();
+    if (visible == false) {
+      proxys.removeWhere((a) {
+        return a.hash == exist.hash;
+      });
+      proxys.insert(0, exist);
+      logger.info('moveRecord: ${exist.hash}');
     }
   }
 
@@ -67,7 +75,7 @@ class RecordProxyProvider with ChangeNotifier {
         proxy.definition = definition;
         proxy.index = clipboards.idx;
         proxy.selected = false;
-        proxy.hash = definition.hash;
+        proxy.hash = clipboards.hash;
         proxys.add(proxy);
       }
 
