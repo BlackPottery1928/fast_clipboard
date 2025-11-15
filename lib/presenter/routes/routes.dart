@@ -10,9 +10,7 @@ class Routes {
         builder: (BuildContext context, GoRouterState state) {
           return FastClipboardHomePage();
         },
-        routes: <RouteBase>[
-
-        ],
+        routes: <RouteBase>[],
       ),
     ],
   );

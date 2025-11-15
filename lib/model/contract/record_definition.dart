@@ -6,7 +6,7 @@ class RecordDefinition {
   late String text;
   late Uint8List image;
   late List<String> files;
-  
+
   late int length = 0;
   late String hash = '';
   late DateTime updated;

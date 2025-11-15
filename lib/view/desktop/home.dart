@@ -27,12 +27,18 @@ class _FastClipboardHomePageState
 
     ServicesBinding.instance.addPostFrameCallback((c) {
       EventHandler.instance.eventBus.on<RecordEvent>().listen((event) async {
-        Provider.of<RecordProxyProvider>(context, listen: false).addRecord(event);
+        Provider.of<RecordProxyProvider>(
+          context,
+          listen: false,
+        ).addRecord(event);
         await databaseHandler.insert(event);
       });
 
       EventHandler.instance.eventBus.on<InAppCopyEvent>().listen((event) async {
-        Provider.of<RecordProxyProvider>(context, listen: false).copyRecord(event);
+        Provider.of<RecordProxyProvider>(
+          context,
+          listen: false,
+        ).copyRecord(event);
       });
 
       Provider.of<RecordProxyProvider>(context, listen: false).loadRecords();

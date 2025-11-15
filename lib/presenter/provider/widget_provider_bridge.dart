@@ -15,9 +15,7 @@ class _WidgetProviderBridgeState extends State<WidgetProviderBridge> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => RecordProxyProvider()),
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => RecordProxyProvider())],
       child: widget.child,
     );
   }
